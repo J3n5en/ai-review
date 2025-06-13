@@ -240,16 +240,18 @@ html.dark .btn-primary {
 }
 
 .btn-secondary {
-  @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+  @apply bg-blue-100 text-blue-700 hover:bg-blue-200 border border-blue-200;
 }
 
 html.dark .btn-secondary {
-  background-color: var(--color-gray-700);
-  color: var(--color-gray-300);
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--color-blue-300);
+  border-color: rgba(59, 130, 246, 0.2);
 }
 
 html.dark .btn-secondary:hover {
-  background-color: var(--color-gray-600);
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .btn-success {
@@ -281,6 +283,16 @@ html.dark .textarea {
 
 .textarea {
   @apply resize-none;
+}
+
+/* MacWhisper兼容性样式 - 确保语音输入工具正常工作 */
+.textarea[data-enable-dictation="true"] {
+  -webkit-appearance: textfield;
+  appearance: textfield;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-family: inherit;
 }
 
 /* 主题背景样式 */
@@ -471,23 +483,27 @@ html.dark .hover-bg:hover {
 }
 
 /* 弹窗专用Markdown文字样式 - 增强对比度 */
-.popup-markdown-text {
-  color: var(--color-gray-950) !important;
+.popup-markdown-text,
+.popup-markdown-text * {
+  color: #1f2937 !important;
 }
 
-html.dark .popup-markdown-text {
-  color: var(--color-gray-50) !important;
+html.dark .popup-markdown-text,
+html.dark .popup-markdown-text * {
+  color: #f9fafb !important;
 }
 
-/* 弹窗Markdown内容增强样式 */
+/* 弹窗Markdown内容增强样式 - 提高优先级 */
 .popup-markdown-text .markdown-content h1,
 .popup-markdown-text .markdown-content h2,
 .popup-markdown-text .markdown-content h3,
 .popup-markdown-text .markdown-content h4,
 .popup-markdown-text .markdown-content h5,
 .popup-markdown-text .markdown-content h6 {
-  color: var(--color-gray-950) !important;
-  font-weight: 600;
+  color: #111827 !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 html.dark .popup-markdown-text .markdown-content h1,
@@ -496,33 +512,114 @@ html.dark .popup-markdown-text .markdown-content h3,
 html.dark .popup-markdown-text .markdown-content h4,
 html.dark .popup-markdown-text .markdown-content h5,
 html.dark .popup-markdown-text .markdown-content h6 {
-  color: var(--color-gray-50) !important;
+  color: #f9fafb !important;
 }
 
 .popup-markdown-text .markdown-content p {
-  color: var(--color-gray-900) !important;
-  line-height: 1.6;
+  color: #374151 !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 html.dark .popup-markdown-text .markdown-content p {
-  color: var(--color-gray-100) !important;
+  color: #d1d5db !important;
 }
 
 .popup-markdown-text .markdown-content li {
-  color: var(--color-gray-900) !important;
+  color: #374151 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 html.dark .popup-markdown-text .markdown-content li {
-  color: var(--color-gray-100) !important;
+  color: #d1d5db !important;
 }
 
 .popup-markdown-text .markdown-content strong {
-  color: var(--color-gray-950) !important;
-  font-weight: 600;
+  color: #1f2937 !important;
+  font-weight: 600 !important;
 }
 
 html.dark .popup-markdown-text .markdown-content strong {
-  color: var(--color-gray-50) !important;
+  color: #f3f4f6 !important;
+}
+
+.popup-markdown-text .markdown-content code {
+  color: #1f2937 !important;
+  margin: 0 !important;
+  padding: 0.1em 0.2em !important;
+}
+
+html.dark .popup-markdown-text .markdown-content code {
+  color: #f9fafb !important;
+}
+
+/* 弹窗Markdown专用 - 覆盖所有默认间距，更加紧凑 */
+.popup-markdown-text .markdown-content ul,
+.popup-markdown-text .markdown-content ol {
+  margin: 0 !important;
+  padding-left: 0.8em !important;
+}
+
+.popup-markdown-text .markdown-content li {
+  margin: 0 !important;
+  padding: 0.1em 0 !important;
+}
+
+.popup-markdown-text .markdown-content pre {
+  margin: 0.2em 0 !important;
+  padding: 0.4em !important;
+}
+
+.popup-markdown-text .markdown-content blockquote {
+  margin: 0.2em 0 !important;
+  padding: 0.2em 0.4em !important;
+}
+
+.popup-markdown-text .markdown-content hr {
+  margin: 0.3em 0 !important;
+}
+
+.popup-markdown-text .markdown-content h1,
+.popup-markdown-text .markdown-content h2,
+.popup-markdown-text .markdown-content h3,
+.popup-markdown-text .markdown-content h4,
+.popup-markdown-text .markdown-content h5,
+.popup-markdown-text .markdown-content h6 {
+  margin: 0.2em 0 0.1em 0 !important;
+}
+
+.popup-markdown-text .markdown-content p {
+  margin: 0.1em 0 !important;
+}
+
+/* 代码复制按钮增强样式 */
+.copy-button {
+  z-index: 10;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  opacity: 0.9;
+}
+
+.copy-button:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* 确保在不同主题下都清晰可见 */
+html.light .copy-button {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #374151 !important;
+  border-color: #d1d5db !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+html.dark .copy-button {
+  background-color: rgba(31, 41, 55, 0.95) !important;
+  color: #e5e7eb !important;
+  border-color: #4b5563 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* McpPopup 深色模式样式 */

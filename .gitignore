@@ -55,7 +55,7 @@ test_client.py
 .env.production.local
 
 # Memory files (user-specific)
-~/.ai-review/
+~/.cunzhi/
 
 # Archive files
 *.zip

@@ -1,0 +1,12 @@
+{
+  "id": "test-markdown-001",
+  "message": "# 代码审查结果\n\n## 发现的问题\n\n1. **性能问题**：循环中存在不必要的计算\n2. **安全问题**：未对用户输入进行验证\n3. **代码风格**：变量命名不规范\n\n## 建议修改\n\n```javascript\n// 原代码\nfor (let i = 0; i < items.length; i++) {\n  const result = expensiveCalculation(items[i]);\n  processItem(result);\n}\n\n// 优化后\nconst results = items.map(item => expensiveCalculation(item));\nresults.forEach(result => processItem(result));\n```\n\n## 总结\n\n- 修复了 **3个** 关键问题\n- 提升了代码性能约 **25%**\n- 增强了安全性\n\n> **注意**：请在修改后运行完整的测试套件",
+  "predefined_options": [
+    "接受所有建议并修改",
+    "只修改性能问题",
+    "只修改安全问题", 
+    "需要更详细的说明",
+    "暂时不修改"
+  ],
+  "is_markdown": true
+}

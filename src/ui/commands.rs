@@ -3,7 +3,7 @@ use crate::config::{AppState, WindowConfig, ReplyConfig, save_config};
 
 #[tauri::command]
 pub async fn get_app_info() -> Result<String, String> {
-    Ok("AI Review App v0.1.0".to_string())
+    Ok("寸止 v0.1.0".to_string())
 }
 
 #[tauri::command]

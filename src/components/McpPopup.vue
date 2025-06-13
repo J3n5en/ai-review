@@ -276,9 +276,17 @@ function createCopyButton(preEl: Element) {
     return
 
   const copyButton = document.createElement('button')
-  copyButton.className = 'copy-button absolute top-2 right-2 px-2 py-1 text-xs rounded transition-colors'
+  copyButton.className = 'copy-button absolute top-2 right-2 px-2 py-1 text-xs rounded transition-colors shadow-sm border'
   copyButton.innerHTML = '📋 复制'
-  copyButton.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 'dark:bg-gray-700', 'dark:text-gray-300', 'dark:hover:bg-gray-600')
+
+  // 根据当前主题设置样式
+  const isDark = document.documentElement.classList.contains('dark')
+  if (isDark) {
+    copyButton.classList.add('bg-gray-800', 'text-gray-200', 'border-gray-600', 'hover:bg-gray-700', 'hover:text-white')
+  }
+  else {
+    copyButton.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'hover:bg-gray-50', 'hover:text-gray-900')
+  }
 
   copyButton.addEventListener('click', async (e) => {
     e.stopPropagation()
@@ -403,19 +411,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="fixed inset-0 flex flex-col z-50 popup-container transition-all duration-200"
-  >
-    <div
-      class="relative w-full h-full flex flex-col shadow-xl popup-content transition-all duration-200"
-    >
+  <div class="fixed inset-0 flex flex-col z-50 popup-container transition-all duration-200">
+    <div class="relative w-full h-full flex flex-col shadow-xl popup-content transition-all duration-200">
       <!-- 头部区域 -->
-      <div
-        class="flex items-center justify-between px-4 py-2 border-b card-border card-bg transition-all duration-200"
-      >
+      <div class="flex items-center justify-between px-4 py-2 border-b card-border card-bg transition-all duration-200">
         <div class="flex items-center gap-2">
           <div class="w-2 h-2 rounded-full bg-green-500" />
-          <span class="text-sm card-text-secondary">寸止 - 告别AI提前终止烦恼</span>
+          <span class="text-sm card-text-secondary">寸止 - 告别AI提前终止烦恼，助力AI更加持久</span>
         </div>
         <div class="flex items-center gap-2">
           <!-- 主题切换按钮 -->
@@ -424,14 +426,17 @@ onMounted(() => {
             :title="`切换到${currentTheme === 'light' ? '深色' : '浅色'}主题`"
             @click="toggleTheme"
           >
-            <ThemeIcon :theme="currentTheme" class="card-text-secondary w-4 h-4" />
+            <ThemeIcon
+              :theme="currentTheme"
+              class="card-text-secondary w-4 h-4"
+            />
           </button>
         </div>
       </div>
 
       <!-- 内容区域 -->
       <div
-        class="flex-1 overflow-y-auto p-2 space-y-1.5 card-bg-secondary transition-all duration-200"
+        class="flex-1 overflow-y-auto p-2 space-y-3 card-bg-secondary transition-all duration-200"
         @drop="handleImageDrop"
         @dragover.prevent
         @dragenter.prevent
@@ -442,7 +447,9 @@ onMounted(() => {
           class="flex items-center justify-center py-8"
         >
           <div class="text-center">
-            <div class="w-6 h-6 border-2 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div
+              class="w-6 h-6 border-2 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"
+            />
             <p class="card-text-secondary text-sm">
               加载中...
             </p>
@@ -450,15 +457,10 @@ onMounted(() => {
         </div>
 
         <!-- 消息显示区域 -->
-        <div
-          v-else-if="request?.message"
-          class="mb-1.5"
-        >
-          <div
-            class="card rounded-lg p-2.5 shadow-sm transition-all duration-200"
-          >
+        <div v-else-if="request?.message">
+          <div class="card rounded-lg px-2 py-1.5 shadow-sm transition-all duration-200">
             <div
-              class="leading-relaxed text-sm markdown-content popup-markdown-text text-left transition-all duration-200"
+              class="leading-snug text-sm markdown-content popup-markdown-text text-left transition-all duration-200"
             >
               <div
                 v-if="request.is_markdown"
@@ -491,20 +493,17 @@ onMounted(() => {
         </div>
 
         <!-- 预定义选项 -->
-        <div
-          v-if="!loading && request.predefined_options && request.predefined_options.length > 0"
-          class="mb-1.5"
-        >
-          <h4 class="text-sm font-medium mb-1.5 card-text">
+        <div v-if="!loading && request.predefined_options && request.predefined_options.length > 0">
+          <h4 class="text-sm font-medium mb-1 card-text">
             请选择选项
           </h4>
 
           <div class="w-full">
-            <div class="grid gap-1">
+            <div class="space-y-1">
               <label
                 v-for="(option, index) in request.predefined_options"
                 :key="`option-${index}`"
-                class="checkbox flex items-center p-2 rounded-lg transition-all duration-200 group card hover:bg-primary-50 cursor-pointer smooth-option"
+                class="checkbox flex items-center rounded-md transition-all duration-200 group card hover:bg-primary-50 cursor-pointer smooth-option"
               >
                 <input
                   v-model="selectedOptions"
@@ -513,9 +512,7 @@ onMounted(() => {
                   class="absolute w-px h-px p-0 -m-px overflow-hidden clip-rect-0 whitespace-nowrap border-0"
                 >
                 <div class="checkbox-box" />
-                <span
-                  class="ml-3 text-sm card-text group-hover:text-primary-700"
-                >{{ option }}</span>
+                <span class="text-sm card-text group-hover:text-primary-700">{{ option }}</span>
               </label>
             </div>
           </div>
@@ -550,17 +547,12 @@ onMounted(() => {
         </div>
 
         <!-- 通用回复输入 -->
-        <div
-          v-if="!loading"
-          class="mb-1.5"
-        >
-          <h4 class="text-sm font-medium mb-1.5 card-text">
+        <div v-if="!loading">
+          <h4 class="text-sm font-medium mb-2 card-text">
             {{ request.predefined_options ? '补充说明 (可选)' : '请输入您的回复' }}
           </h4>
 
-          <div
-            class="relative rounded-md border-2 border-dashed p-1.5 mb-1.5 card-border card-bg-accent"
-          >
+          <div class="relative rounded-md border-2 border-dashed p-4 py-6 mb-2 card-border card-bg-accent">
             <p class="text-xs text-center card-text-secondary">
               拖拽图片到此处或在输入框中粘贴图片 (⌘+V)
             </p>
@@ -572,6 +564,15 @@ onMounted(() => {
             :placeholder="request.predefined_options ? '您可以在这里添加补充说明...' : '请输入您的回复...'"
             class="textarea smooth-textarea auto-resize-textarea"
             :disabled="submitting"
+            role="textbox"
+            aria-label="用户输入框"
+            aria-multiline="true"
+            spellcheck="true"
+            autocomplete="off"
+            autocorrect="on"
+            autocapitalize="sentences"
+            data-enable-dictation="true"
+            lang="zh-CN"
             @paste="handleImagePaste"
             @input="autoResizeTextarea"
           />
@@ -579,7 +580,7 @@ onMounted(() => {
       </div>
 
       <!-- 底部操作栏 -->
-      <div class="border-t px-3 py-2.5 card-border card-bg-accent">
+      <div class="border-t px-2.5 py-2 card-border card-bg-accent">
         <div
           v-if="!loading"
           class="flex justify-between items-center"
@@ -637,3 +638,58 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.checkbox {
+  padding: 0.625rem 1.125rem;
+  margin: 0.25rem 0;
+}
+
+.checkbox span {
+  margin-left: 0.875rem;
+}
+
+.space-y-1 > * + * {
+  margin-top: 0.25rem;
+}
+
+.markdown-rendered {
+  padding: 0.5rem 0;
+}
+
+.markdown-rendered :deep(h1),
+.markdown-rendered :deep(h2),
+.markdown-rendered :deep(h3),
+.markdown-rendered :deep(h4),
+.markdown-rendered :deep(h5),
+.markdown-rendered :deep(h6) {
+  margin: 0.25rem 0 0.125rem 0 !important;
+}
+
+.markdown-rendered :deep(p) {
+  margin: 0.125rem 0 !important;
+}
+
+.markdown-rendered :deep(ul),
+.markdown-rendered :deep(ol) {
+  margin: 0.25rem 0 !important;
+  padding-left: 1rem !important;
+}
+
+.markdown-rendered :deep(li) {
+  margin: 0.0625rem 0 !important;
+}
+
+.markdown-rendered :deep(pre) {
+  margin: 0.25rem 0 !important;
+}
+
+.markdown-rendered :deep(blockquote) {
+  margin: 0.25rem 0 !important;
+  padding: 0.25rem 0.5rem !important;
+}
+
+.markdown-rendered :deep(hr) {
+  margin: 0.375rem 0 !important;
+}
+</style>

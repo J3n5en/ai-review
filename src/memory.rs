@@ -43,7 +43,7 @@ impl MemoryManager {
     pub fn new(project_path: &str) -> Result<Self> {
         // 规范化项目路径
         let normalized_path = Self::normalize_project_path(project_path)?;
-        let memory_dir = normalized_path.join(".ai-review-memory");
+        let memory_dir = normalized_path.join(".cunzhi-memory");
 
         // 尝试创建记忆目录，增强错误处理
         let final_memory_dir = if let Err(e) = fs::create_dir_all(&memory_dir) {
@@ -55,7 +55,7 @@ impl MemoryManager {
                     .file_name()
                     .and_then(|n| n.to_str())
                     .unwrap_or("default");
-                let temp_dir = std::env::temp_dir().join("ai-review-memory").join(project_name);
+                let temp_dir = std::env::temp_dir().join("cunzhi-memory").join(project_name);
 
                 // 尝试创建临时目录
                 if let Err(temp_err) = fs::create_dir_all(&temp_dir) {

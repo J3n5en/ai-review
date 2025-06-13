@@ -111,16 +111,16 @@ if ($CurrentPath -notlike "*$BinDir*") {
 
 # 创建开始菜单快捷方式
 $StartMenuDir = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
-$ShortcutPath = "$StartMenuDir\AI Review.lnk"
+$ShortcutPath = "$StartMenuDir\寸止.lnk"
 
 try {
     $WshShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
     $Shortcut.TargetPath = $MainExe
     $Shortcut.WorkingDirectory = $InstallDir
-    $Shortcut.Description = "AI Review - 智能代码审查工具"
-    if (Test-Path "$InstallDir\icons\ai-review.png") {
-        $Shortcut.IconLocation = "$InstallDir\icons\ai-review.png"
+    $Shortcut.Description = "寸止 - 告别AI提前终止烦恼，助力AI更加持久"
+    if (Test-Path "$InstallDir\icons\cunzhi.png") {
+        $Shortcut.IconLocation = "$InstallDir\icons\cunzhi.png"
     }
     $Shortcut.Save()
     Write-Host "✅ 开始菜单快捷方式已创建" -ForegroundColor Green
@@ -130,10 +130,10 @@ catch {
 }
 
 Write-Host ""
-Write-Host "🎉 AI Review 安装完成！" -ForegroundColor Green
+Write-Host "🎉 寸止 安装完成！" -ForegroundColor Green
 Write-Host ""
 Write-Host "📋 使用方法：" -ForegroundColor Cyan
-Write-Host "  🖥️  GUI模式: 从开始菜单打开 'AI Review'" -ForegroundColor White
+Write-Host "  🖥️  GUI模式: 从开始菜单打开 '寸止'" -ForegroundColor White
 Write-Host "  💻 命令行模式:" -ForegroundColor White
 Write-Host "    等一下                          - 启动 UI 界面" -ForegroundColor White
 Write-Host "    等一下 --mcp-request file       - MCP 弹窗模式" -ForegroundColor White

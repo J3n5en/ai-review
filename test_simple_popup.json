@@ -1,0 +1,11 @@
+{
+  "id": "test-simple-001", 
+  "message": "请选择您希望如何处理这个文件：",
+  "predefined_options": [
+    "保存并继续",
+    "放弃更改",
+    "查看差异",
+    "稍后处理"
+  ],
+  "is_markdown": false
+}
