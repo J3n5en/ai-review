@@ -101,7 +101,102 @@ jobs:
         with:
           tagName: app-v__VERSION__ # the action automatically replaces __VERSION__ with the app version
           releaseName: '寸止 v__VERSION__'
-          releaseBody: ''
+          releaseBody: |
+            # 🎉 寸止 v__VERSION__ 发布
+
+            **寸止** - 告别AI提前终止烦恼，助力AI更加持久
+
+            基于 MCP (Model Context Protocol) 的智能代码审查工具，提供弹窗交互和记忆管理功能。
+
+            ## 📦 安装说明
+
+            ### macOS 用户
+
+            1. **下载并安装**
+               - 下载 `cunzhi_0.1.0_aarch64.dmg` (Apple Silicon) 或 `cunzhi_0.1.0_x64.dmg` (Intel)
+               - 双击 DMG 文件，将应用拖拽到 Applications 文件夹
+
+            2. **配置环境变量**
+               ```bash
+               # 添加到 ~/.zshrc 或 ~/.bash_profile
+               export PATH="/Applications/寸止.app/Contents/MacOS:$PATH"
+
+               # 重新加载配置
+               source ~/.zshrc
+               ```
+
+            3. **验证安装**
+               ```bash
+               # 检查 GUI 应用
+               open -a 寸止
+               ```
+
+            ### Windows 用户
+
+            1. **下载并安装**
+               - 下载并安装 `cunzhi_0.1.0_x64-setup.exe`
+
+            2. **配置环境变量**
+               - 打开"系统属性" → "高级" → "环境变量"
+               - 在"系统变量"中找到 `Path`，点击"编辑"
+               - 添加新路径：`C:\Program Files\寸止\`
+               - 点击"确定"保存
+
+            3. **验证安装**
+               ```cmd
+               # 检查 GUI 应用
+               start "" "C:\Program Files\寸止\等一下.exe"
+               ```
+
+            ## 🚀 快速开始
+
+            ### 作为 MCP 工具使用
+
+            在 Claude Desktop 配置文件中添加：
+
+            ```json
+            {
+              "mcpServers": {
+                "cunzhi": {
+                  "command": "寸止",
+                  "args": []
+                }
+              }
+            }
+            ```
+
+            ### 作为独立应用使用
+
+            直接启动 GUI 应用进行配置和测试：
+            - **macOS**: 从 Launchpad 或 Applications 文件夹启动
+            - **Windows**: 从开始菜单或直接运行可执行文件
+
+            ## 🛠️ 主要功能
+
+            - **🎯 MCP 标准兼容**: 完全符合 MCP 2024-11-05 协议规范
+            - **🎨 美观的弹窗界面**: 现代化暗黑主题 UI
+            - **🔒 安全的 Markdown 渲染**: 支持代码高亮
+            - **🧠 全局记忆管理**: 智能存储开发规范和用户偏好
+            - **📷 图片支持**: 支持图片上传和处理
+            - **⚡ 高效通信**: 进程间通信，响应迅速
+
+            ## 🆘 故障排除
+
+            ### 权限问题 (macOS)
+            ```bash
+            # 如果遇到"无法验证开发者"错误
+            sudo xattr -rd com.apple.quarantine /Applications/寸止.app
+            ```
+
+            ### 路径问题
+            ```bash
+            # 检查环境变量是否正确设置
+            echo $PATH  # macOS/Linux
+            echo %PATH%  # Windows
+            ```
+            ---
+
+            **注意**: 首次运行时，应用会在用户配置目录创建必要的配置文件和音频资源。
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
