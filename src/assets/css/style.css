@@ -2,7 +2,7 @@
 
 /*
   ===============================
-  AI Review 统一颜色系统
+  寸止 统一颜色系统
   ===============================
   
   主色调 (Primary): 使用 primary-{shade} 系列
@@ -472,12 +472,11 @@ html.dark .hover-bg:hover {
 
 /* 弹窗专用Markdown文字样式 - 增强对比度 */
 .popup-markdown-text {
-  @apply text-gray-900;
-  color: var(--color-gray-900);
+  color: var(--color-gray-950) !important;
 }
 
 html.dark .popup-markdown-text {
-  color: var(--color-gray-100);
+  color: var(--color-gray-50) !important;
 }
 
 /* 弹窗Markdown内容增强样式 */
@@ -487,7 +486,7 @@ html.dark .popup-markdown-text {
 .popup-markdown-text .markdown-content h4,
 .popup-markdown-text .markdown-content h5,
 .popup-markdown-text .markdown-content h6 {
-  color: var(--color-gray-900);
+  color: var(--color-gray-950) !important;
   font-weight: 600;
 }
 
@@ -497,33 +496,33 @@ html.dark .popup-markdown-text .markdown-content h3,
 html.dark .popup-markdown-text .markdown-content h4,
 html.dark .popup-markdown-text .markdown-content h5,
 html.dark .popup-markdown-text .markdown-content h6 {
-  color: var(--color-gray-100);
+  color: var(--color-gray-50) !important;
 }
 
 .popup-markdown-text .markdown-content p {
-  color: var(--color-gray-800);
+  color: var(--color-gray-900) !important;
   line-height: 1.6;
 }
 
 html.dark .popup-markdown-text .markdown-content p {
-  color: var(--color-gray-200);
+  color: var(--color-gray-100) !important;
 }
 
 .popup-markdown-text .markdown-content li {
-  color: var(--color-gray-800);
+  color: var(--color-gray-900) !important;
 }
 
 html.dark .popup-markdown-text .markdown-content li {
-  color: var(--color-gray-200);
+  color: var(--color-gray-100) !important;
 }
 
 .popup-markdown-text .markdown-content strong {
-  color: var(--color-gray-900);
+  color: var(--color-gray-950) !important;
   font-weight: 600;
 }
 
 html.dark .popup-markdown-text .markdown-content strong {
-  color: var(--color-gray-100);
+  color: var(--color-gray-50) !important;
 }
 
 /* McpPopup 深色模式样式 */

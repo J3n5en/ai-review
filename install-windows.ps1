@@ -1,4 +1,4 @@
-# AI Review Windows 安装脚本
+# 寸止 Windows 安装脚本
 
 param(
     [switch]$BuildOnly = $false
@@ -6,7 +6,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "🚀 开始安装 AI Review (Windows)..." -ForegroundColor Green
+Write-Host "🚀 开始安装 寸止 (Windows)..." -ForegroundColor Green
 
 # 检查必要的工具
 function Test-Command {
@@ -43,7 +43,7 @@ Write-Host "🔨 构建二进制文件..." -ForegroundColor Yellow
 cargo build --release
 
 # 检查构建结果
-$BinaryPath = "target\release\ai-review.exe"
+$BinaryPath = "target\release\cunzhi.exe"
 if (-not (Test-Path $BinaryPath)) {
     Write-Host "❌ 二进制文件构建失败: $BinaryPath" -ForegroundColor Red
     exit 1
@@ -54,7 +54,7 @@ Write-Host "✅ 二进制文件构建成功: $BinaryPath" -ForegroundColor Green
 # 如果只构建不安装，则在这里退出
 if ($BuildOnly) {
     Write-Host ""
-    Write-Host "🎉 AI Review 构建完成！" -ForegroundColor Green
+    Write-Host "🎉 寸止 构建完成！" -ForegroundColor Green
     Write-Host ""
     Write-Host "📋 二进制文件位置: $BinaryPath" -ForegroundColor Cyan
     Write-Host ""
@@ -64,14 +64,14 @@ if ($BuildOnly) {
 
 # 创建安装目录
 $LocalAppData = $env:LOCALAPPDATA
-$InstallDir = "$LocalAppData\AI-Review"
+$InstallDir = "$LocalAppData\寸止"
 $BinDir = "$InstallDir\bin"
 
 Write-Host "📁 创建安装目录: $InstallDir" -ForegroundColor Yellow
 New-Item -ItemType Directory -Path $BinDir -Force | Out-Null
 
 # 复制二进制文件
-$MainExe = "$BinDir\ai-review.exe"
+$MainExe = "$BinDir\cunzhi.exe"
 $UiExe = "$BinDir\等一下.exe"
 $McpExe = "$BinDir\寸止.exe"
 
@@ -87,7 +87,7 @@ $IconSource = "icons\icon-128.png"
 if (Test-Path $IconSource) {
     $IconDir = "$InstallDir\icons"
     New-Item -ItemType Directory -Path $IconDir -Force | Out-Null
-    Copy-Item $IconSource "$IconDir\ai-review.png" -Force
+    Copy-Item $IconSource "$IconDir\cunzhi.png" -Force
     Write-Host "✅ 图标已复制" -ForegroundColor Green
 }
 

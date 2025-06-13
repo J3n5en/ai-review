@@ -1,9 +1,9 @@
-use ai_review::config::{AppState, load_config_and_apply_window_settings};
+use cunzhi::config::{AppState, load_config_and_apply_window_settings};
 use anyhow::Result;
 use tauri::Manager;
 
 // 重新导出所有命令函数
-pub use ai_review::ui::*;
+pub use cunzhi::ui::*;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {

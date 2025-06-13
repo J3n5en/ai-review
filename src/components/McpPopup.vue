@@ -415,7 +415,7 @@ onMounted(() => {
       >
         <div class="flex items-center gap-2">
           <div class="w-2 h-2 rounded-full bg-green-500" />
-          <span class="text-sm card-text-secondary">寸止 - 智能代码审查</span>
+          <span class="text-sm card-text-secondary">寸止 - 告别AI提前终止烦恼</span>
         </div>
         <div class="flex items-center gap-2">
           <!-- 主题切换按钮 -->
@@ -452,10 +452,10 @@ onMounted(() => {
         <!-- 消息显示区域 -->
         <div
           v-else-if="request?.message"
-          class="mb-2"
+          class="mb-1.5"
         >
           <div
-            class="card rounded-lg p-3 shadow-sm transition-all duration-200"
+            class="card rounded-lg p-2.5 shadow-sm transition-all duration-200"
           >
             <div
               class="leading-relaxed text-sm markdown-content popup-markdown-text text-left transition-all duration-200"
@@ -493,18 +493,18 @@ onMounted(() => {
         <!-- 预定义选项 -->
         <div
           v-if="!loading && request.predefined_options && request.predefined_options.length > 0"
-          class="mb-2"
+          class="mb-1.5"
         >
-          <h4 class="text-sm font-medium mb-2 card-text">
+          <h4 class="text-sm font-medium mb-1.5 card-text">
             请选择选项
           </h4>
 
           <div class="w-full">
-            <div class="grid gap-1.5">
+            <div class="grid gap-1">
               <label
                 v-for="(option, index) in request.predefined_options"
                 :key="`option-${index}`"
-                class="checkbox flex items-center p-2.5 rounded-lg transition-all duration-200 group card hover:bg-primary-50 cursor-pointer smooth-option"
+                class="checkbox flex items-center p-2 rounded-lg transition-all duration-200 group card hover:bg-primary-50 cursor-pointer smooth-option"
               >
                 <input
                   v-model="selectedOptions"
@@ -552,14 +552,14 @@ onMounted(() => {
         <!-- 通用回复输入 -->
         <div
           v-if="!loading"
-          class="mb-2"
+          class="mb-1.5"
         >
-          <h4 class="text-sm font-medium mb-2 card-text">
+          <h4 class="text-sm font-medium mb-1.5 card-text">
             {{ request.predefined_options ? '补充说明 (可选)' : '请输入您的回复' }}
           </h4>
 
           <div
-            class="relative rounded-md border-2 border-dashed p-2 mb-2 card-border card-bg-accent"
+            class="relative rounded-md border-2 border-dashed p-1.5 mb-1.5 card-border card-bg-accent"
           >
             <p class="text-xs text-center card-text-secondary">
               拖拽图片到此处或在输入框中粘贴图片 (⌘+V)

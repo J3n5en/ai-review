@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# AI Review 安装脚本 - macOS App Bundle 方式
+# 寸止 安装脚本 - macOS App Bundle 方式
 
 set -e
 
@@ -8,9 +8,9 @@ set -e
 BUILD_ONLY=false
 if [[ "$1" == "--build-only" ]]; then
     BUILD_ONLY=true
-    echo "🚀 只构建不安装 AI Review..."
+    echo "🚀 只构建不安装 寸止..."
 else
-    echo "🚀 开始安装 AI Review (macOS App Bundle)..."
+    echo "🚀 开始安装 寸止 (macOS App Bundle)..."
 fi
 
 # 检查是否为 macOS
@@ -48,7 +48,7 @@ while [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; do
                 echo "🔧 检测到二进制文件，尝试手动创建 App Bundle..."
 
                 # 手动创建 App Bundle
-                APP_BUNDLE="target/release/bundle/macos/AI Review.app"
+                APP_BUNDLE="target/release/bundle/macos/寸止.app"
                 mkdir -p "$APP_BUNDLE/Contents/MacOS"
                 mkdir -p "$APP_BUNDLE/Contents/Resources"
 
@@ -68,15 +68,15 @@ while [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; do
 <plist version="1.0">
 <dict>
     <key>CFBundleDisplayName</key>
-    <string>AI Review</string>
+    <string>寸止</string>
     <key>CFBundleExecutable</key>
     <string>等一下</string>
     <key>CFBundleIconFile</key>
     <string>icon.icns</string>
     <key>CFBundleIdentifier</key>
-    <string>com.imhuso.ai-review</string>
+    <string>com.imhuso.寸止</string>
     <key>CFBundleName</key>
-    <string>AI Review</string>
+    <string>寸止</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -104,7 +104,7 @@ PLIST_EOF
 done
 
 # 检查构建结果
-APP_BUNDLE="target/release/bundle/macos/AI Review.app"
+APP_BUNDLE="target/release/bundle/macos/寸止.app"
 if [[ ! -d "$APP_BUNDLE" ]]; then
     echo "❌ 应用包构建失败: $APP_BUNDLE"
     exit 1
@@ -115,7 +115,7 @@ echo "✅ 应用包构建成功: $APP_BUNDLE"
 # 如果只构建不安装，则在这里退出
 if [[ "$BUILD_ONLY" == "true" ]]; then
     echo ""
-    echo "🎉 AI Review 构建完成！"
+    echo "🎉 寸止 构建完成！"
     echo ""
     echo "📋 应用包位置: $APP_BUNDLE"
     echo ""
@@ -127,14 +127,14 @@ fi
 echo "📋 安装应用到 Applications 目录..."
 
 # 移除旧版本（如果存在）
-if [[ -d "/Applications/AI Review.app" ]]; then
+if [[ -d "/Applications/寸止.app" ]]; then
     echo "🗑️  移除旧版本..."
-    sudo rm -rf "/Applications/AI Review.app"
+    sudo rm -rf "/Applications/寸止.app"
 fi
 
 # 复制新版本
 sudo cp -R "$APP_BUNDLE" "/Applications/"
-echo "✅ 应用已安装到 /Applications/AI Review.app"
+echo "✅ 应用已安装到 /Applications/寸止.app"
 
 # 运行 postinstall 脚本
 echo "⚙️  配置命令行工具..."
@@ -146,10 +146,10 @@ else
 fi
 
 echo ""
-echo "🎉 AI Review 安装完成！"
+echo "🎉 寸止 安装完成！"
 echo ""
 echo "📋 使用方法："
-echo "  🖥️  GUI模式: 在 Applications 中打开 'AI Review'"
+echo "  🖥️  GUI模式: 在 Applications 中打开 '寸止'"
 echo "  💻 命令行模式:"
 echo "    等一下                          - 启动 UI 界面"
 echo "    等一下 --mcp-request file       - MCP 弹窗模式"
@@ -169,4 +169,4 @@ cat << 'EOF'
 EOF
 echo ""
 echo "🔗 命令行工具已链接到 /usr/local/bin/"
-echo "📁 应用位置: /Applications/AI Review.app"
+echo "📁 应用位置: /Applications/寸止.app"

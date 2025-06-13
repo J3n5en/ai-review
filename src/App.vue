@@ -304,7 +304,7 @@ onMounted(async () => {
             寸止
           </h1>
           <p class="text-lg card-text-secondary">
-            智能代码审查与交互工具
+            告别AI提前终止烦恼，助力AI更加持久
           </p>
         </div>
 

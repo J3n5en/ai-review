@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# AI Review 通用安装脚本 - 支持 macOS、Linux
+# 寸止 通用安装脚本 - 支持 macOS、Linux
 
 set -e
 
-echo "🚀 开始安装 AI Review..."
+echo "🚀 开始安装 寸止..."
 
 # 检测操作系统
 OS="unknown"
@@ -43,7 +43,7 @@ if [[ "$OS" == "macos" ]]; then
     cargo tauri build
     
     # 检查构建结果
-    APP_BUNDLE="target/release/bundle/macos/AI Review.app"
+    APP_BUNDLE="target/release/bundle/macos/寸止.app"
     if [[ ! -d "$APP_BUNDLE" ]]; then
         echo "❌ 应用包构建失败: $APP_BUNDLE"
         exit 1
@@ -55,14 +55,14 @@ if [[ "$OS" == "macos" ]]; then
     echo "📋 安装应用到 Applications 目录..."
     
     # 移除旧版本（如果存在）
-    if [[ -d "/Applications/AI Review.app" ]]; then
+    if [[ -d "/Applications/寸止.app" ]]; then
         echo "🗑️  移除旧版本..."
-        sudo rm -rf "/Applications/AI Review.app"
+        sudo rm -rf "/Applications/寸止.app"
     fi
-    
+
     # 复制新版本
     sudo cp -R "$APP_BUNDLE" "/Applications/"
-    echo "✅ 应用已安装到 /Applications/AI Review.app"
+    echo "✅ 应用已安装到 /Applications/寸止.app"
     
     # 运行 postinstall 脚本
     echo "⚙️  配置命令行工具..."
@@ -81,7 +81,7 @@ elif [[ "$OS" == "linux" ]]; then
     cargo build --release
     
     # 检查构建结果
-    if [[ ! -f "target/release/ai-review" ]]; then
+    if [[ ! -f "target/release/cunzhi" ]]; then
         echo "❌ 二进制文件构建失败"
         exit 1
     fi
@@ -97,29 +97,29 @@ elif [[ "$OS" == "linux" ]]; then
     mkdir -p "$BIN_DIR" "$APP_DIR" "$ICON_DIR"
     
     # 复制二进制文件
-    cp "target/release/ai-review" "$BIN_DIR/ai-review"
-    chmod +x "$BIN_DIR/ai-review"
-    
+    cp "target/release/cunzhi" "$BIN_DIR/cunzhi"
+    chmod +x "$BIN_DIR/cunzhi"
+
     # 创建软链接
-    ln -sf "$BIN_DIR/ai-review" "$BIN_DIR/等一下"
-    ln -sf "$BIN_DIR/ai-review" "$BIN_DIR/寸止"
+    ln -sf "$BIN_DIR/cunzhi" "$BIN_DIR/等一下"
+    ln -sf "$BIN_DIR/cunzhi" "$BIN_DIR/寸止"
     
     echo "✅ 命令行工具已安装到 $BIN_DIR"
     
     # 复制图标（如果存在）
     if [[ -f "icons/icon-128.png" ]]; then
-        cp "icons/icon-128.png" "$ICON_DIR/ai-review.png"
+        cp "icons/icon-128.png" "$ICON_DIR/cunzhi.png"
     fi
-    
+
     # 创建桌面文件
-    cat > "$APP_DIR/ai-review.desktop" << EOF
+    cat > "$APP_DIR/cunzhi.desktop" << EOF
 [Desktop Entry]
-Name=AI Review
+Name=寸止
 Name[zh_CN]=寸止
-Comment=AI Review Tool for code analysis
-Comment[zh_CN]=智能代码审查工具
-Exec=$BIN_DIR/ai-review
-Icon=ai-review
+Comment=告别AI提前终止烦恼，助力AI更加持久
+Comment[zh_CN]=告别AI提前终止烦恼，助力AI更加持久
+Exec=$BIN_DIR/cunzhi
+Icon=cunzhi
 Terminal=false
 Type=Application
 Categories=Development;
@@ -143,11 +143,11 @@ else
 fi
 
 echo ""
-echo "🎉 AI Review 安装完成！"
+echo "🎉 寸止 安装完成！"
 echo ""
 echo "📋 使用方法："
 if [[ "$OS" == "macos" ]]; then
-    echo "  🖥️  GUI模式: 在 Applications 中打开 'AI Review'"
+    echo "  🖥️  GUI模式: 在 Applications 中打开 '寸止'"
 fi
 echo "  💻 命令行模式:"
 echo "    等一下                          - 启动 UI 界面"
@@ -170,8 +170,8 @@ echo ""
 
 if [[ "$OS" == "macos" ]]; then
     echo "🔗 命令行工具已链接到 /usr/local/bin/"
-    echo "📁 应用位置: /Applications/AI Review.app"
+    echo "📁 应用位置: /Applications/寸止.app"
 elif [[ "$OS" == "linux" ]]; then
     echo "🔗 命令行工具已安装到 $BIN_DIR"
-    echo "📁 桌面应用: $APP_DIR/ai-review.desktop"
+    echo "📁 桌面应用: $APP_DIR/cunzhi.desktop"
 fi

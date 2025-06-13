@@ -112,9 +112,9 @@ pnpm dev
 
 # 3. 构建并运行 MCP 服务器
 cargo build --release
-./target/release/ai-review-mcp  # macOS/Linux
+./target/release/cunzhi  # macOS/Linux
 # 或
-.\target\release\ai-review-mcp.exe  # Windows
+.\target\release\cunzhi.exe  # Windows
 ```
 
 ## 📋 工作流程
@@ -197,8 +197,8 @@ Tauri 应用 (Vue + Tailwind CSS)
 ```json
 {
   "mcpServers": {
-    "ai-review": {
-      "command": "/path/to/ai-review/target/release/ai-review-mcp"
+    "寸止": {
+      "command": "/path/to/ai-review/target/release/cunzhi"
     }
   }
 }
@@ -212,7 +212,7 @@ Tauri 应用 (Vue + Tailwind CSS)
 {
   "name": "寸止",
   "command": "寸止" // macOS/Linux
-  // Windows: "command": "ai-review-mcp.exe"
+  // Windows: "command": "cunzhi.exe"
 }
 ```
 
@@ -220,9 +220,9 @@ Tauri 应用 (Vue + Tailwind CSS)
 
 Windows 用户需要：
 
-1. 确保 `ai-review-mcp.exe` 在系统 PATH 中
+1. 确保 `cunzhi.exe` 在系统 PATH 中
 2. 在配置文件中使用 `.exe` 扩展名
-3. 可能需要使用完整路径：`"C:\\path\\to\\ai-review-mcp.exe"`
+3. 可能需要使用完整路径：`"C:\\path\\to\\cunzhi.exe"`
 
 ## 📁 项目结构
 
@@ -256,10 +256,10 @@ ai-review/
 
 ```bash
 # 启动 MCP 服务器进行测试
-./target/release/ai-review-mcp
+./target/release/cunzhi
 
 # 在另一个终端测试 MCP 通信
-echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | ./target/release/ai-review-mcp
+echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | ./target/release/cunzhi
 ```
 
 ### 弹窗测试
@@ -272,19 +272,19 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | ./target/release/ai
 
 1. **弹窗无法启动**
 
-   - 检查应用是否正确安装到 `/Applications/AI Review.app`
+   - 检查应用是否正确安装到 `/Applications/寸止.app`
    - 确认命令行工具链接是否正确：`which 寸止`
    - 重新运行安装脚本：`./install.sh`
 
 2. **MCP 服务器无响应**
 
-   - 检查可执行文件是否存在：`./target/release/ai-review-mcp`
+   - 检查可执行文件是否存在：`./target/release/cunzhi`
    - 运行 `cargo build --release` 重新构建
    - 查看错误日志：`RUST_LOG=debug 寸止`
 
 3. **记忆管理问题**
    - 确保在 git 仓库根目录中使用
-   - 检查 `~/.ai-review/` 目录权限
+   - 检查 `~/.cunzhi/` 目录权限
 
 ### 调试模式
 
@@ -293,7 +293,7 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | ./target/release/ai
 RUST_LOG=debug 寸止
 
 # 查看记忆文件
-ls -la ~/.ai-review/
+ls -la ~/.cunzhi/
 ```
 
 ## 🛠️ 开发

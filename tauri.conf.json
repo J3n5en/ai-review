@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2.0.0",
-  "productName": "AI Review",
+  "productName": "寸止",
   "version": "0.1.0",
-  "identifier": "com.imhuso.ai-review",
+  "identifier": "com.imhuso.cunzhi",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
@@ -67,8 +67,8 @@
     ],
     "copyright": "",
     "category": "DeveloperTool",
-    "shortDescription": "AI Review Tool",
-    "longDescription": "AI Review Tool for code analysis and review",
+    "shortDescription": "寸止 - 告别AI提前终止烦恼",
+    "longDescription": "寸止 - 告别AI提前终止烦恼，助力AI更加持久",
     "macOS": {
       "frameworks": [],
       "minimumSystemVersion": "10.13",

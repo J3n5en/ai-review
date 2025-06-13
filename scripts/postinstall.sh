@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # macOS 安装后脚本
-# 此脚本在 AI Review.app 安装后运行，自动设置命令行工具
+# 此脚本在 寸止.app 安装后运行，自动设置命令行工具
 
 set -e
 
-echo "🚀 AI Review 安装后配置..."
+echo "🚀 寸止 安装后配置..."
 
 # 获取应用程序路径
-APP_PATH="/Applications/AI Review.app"
+APP_PATH="/Applications/寸止.app"
 MAIN_BINARY="$APP_PATH/Contents/MacOS/等一下"
 
 # 检查应用是否存在
 if [[ ! -d "$APP_PATH" ]]; then
-    echo "❌ 错误: 未找到 AI Review.app"
+    echo "❌ 错误: 未找到 寸止.app"
     exit 1
 fi
 
@@ -59,12 +59,12 @@ else
 fi
 
 echo ""
-echo "🎉 AI Review 安装完成！"
+echo "🎉 寸止 安装完成！"
 echo ""
 echo "📋 使用方法:"
 echo "  等一下                          - 启动UI界面"
 echo "  等一下 --mcp-request file       - MCP弹窗模式"
 echo "  寸止                            - 启动MCP服务器"
 echo ""
-echo "📁 应用位置: /Applications/AI Review.app"
+echo "📁 应用位置: /Applications/寸止.app"
 echo "🔗 命令链接: /usr/local/bin/等一下, /usr/local/bin/寸止"
