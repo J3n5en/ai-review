@@ -1,0 +1,109 @@
+name: Release
+
+on:
+  push:
+    # tags:
+    #   - 'v*.*.*'
+    branches:
+      - main
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: 'macos-latest'
+            args: '--target aarch64-apple-darwin'
+            target: 'aarch64-apple-darwin'
+            arch: 'aarch64'
+          - platform: 'macos-latest'
+            args: '--target x86_64-apple-darwin'
+            target: 'x86_64-apple-darwin'
+            arch: 'x86_64'
+          - platform: 'windows-latest'
+            args: '--target x86_64-pc-windows-msvc'
+            target: 'x86_64-pc-windows-msvc'
+            arch: 'x86_64'
+          # - platform: 'ubuntu-22.04'
+          #   args: '--target x86_64-unknown-linux-gnu'
+          #   target: 'x86_64-unknown-linux-gnu'
+          #   arch: 'x86_64'
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.0-dev \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            libasound2-dev \
+            pkg-config \
+            libpulse-dev \
+            libjack-jackd2-dev \
+            portaudio19-dev \
+            build-essential
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.1
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './ -> target'
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Set Windows environment for WiX
+        if: matrix.platform == 'windows-latest'
+        run: |
+          # Set code page to UTF-8 for better Unicode support
+          chcp 65001
+          # Set environment variables for WiX
+          echo "WIX_TEMP=$env:TEMP\wix" >> $env:GITHUB_ENV
+          echo "WIX_UNICODE=1" >> $env:GITHUB_ENV
+        shell: powershell
+
+      - name: Use Tauri Action
+        uses: LimLLL/tauri-action-renameArtifacts@v0.5.18
+        id: tauri-action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Additional environment variables for Windows
+          WIX_TEMP: ${{ env.WIX_TEMP }}
+          WIX_UNICODE: ${{ env.WIX_UNICODE }}
+        with:
+          tagName: app-v__VERSION__ # the action automatically replaces __VERSION__ with the app version
+          releaseName: '寸止 v__VERSION__'
+          releaseBody: ''
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}
+          includeUpdaterJson: false
+          renameArtifacts: 'cunzhi'

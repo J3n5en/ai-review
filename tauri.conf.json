@@ -56,10 +56,14 @@
   "bundle": {
     "active": true,
     "targets": [
-      "app"
+      "deb",
+      "dmg",
+      "nsis"
     ],
     "icon": [
-      "icons/icon.icns"
+      "icons/icon.icns",
+      "icons/icon.ico",
+      "icons/icon.png"
     ],
     "resources": [
       "scripts/postinstall.sh",
@@ -76,6 +80,20 @@
       "signingIdentity": null,
       "providerShortName": null,
       "entitlements": null
+    },
+    "windows": {
+      "nsis": {
+        "installMode": "perMachine",
+        "languages": [
+          "English"
+        ],
+        "displayLanguageSelector": false
+      },
+      "allowDowngrades": true,
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      }
     }
   }
 }
