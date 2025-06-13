@@ -21,40 +21,84 @@
 
 ![寸止 弹窗演示](./screenshots/demo.png)
 
-*寸止 的现代化弹窗界面，支持 Markdown 渲染、代码高亮、预定义选项和自由文本输入*
+_寸止 的现代化弹窗界面，支持 Markdown 渲染、代码高亮、预定义选项和自由文本输入_
 
 ## 🚀 快速开始
 
-### macOS 安装方式
+### 通用安装（推荐）
+
+支持 macOS 和 Linux：
 
 ```bash
-# 1. 安装前端依赖
+# 1. 克隆仓库
+git clone https://github.com/imhuso/ai-review.git
+cd ai-review
+
+# 2. 安装依赖
 pnpm install
 
-# 2. 构建项目
-cargo build --release
-
-# 3. 全局安装（推荐，需要管理员权限）
-./install.sh
+# 3. 运行通用安装脚本
+bash install-universal.sh
 
 # 4. 验证安装
-which ai-review-mcp
+which 寸止
 ```
 
-### Windows 安装方式（未测试）
+### macOS 专用安装
 
-```powershell
-# 1. 安装前端依赖
+```bash
+# 1. 克隆仓库
+git clone https://github.com/imhuso/ai-review.git
+cd ai-review
+
+# 2. 安装依赖
 pnpm install
 
-# 2. 构建项目
-cargo build --release
-
-# 3. 手动复制可执行文件到系统PATH
-# 将 target\release\ai-review-mcp.exe 复制到 C:\Windows\System32\ 或其他PATH目录
+# 3. 运行 macOS 安装脚本
+bash install.sh
 
 # 4. 验证安装
-where ai-review-mcp
+which 寸止
+```
+
+### Windows 安装
+
+```powershell
+# 1. 克隆仓库
+git clone https://github.com/imhuso/ai-review.git
+cd ai-review
+
+# 2. 安装依赖
+pnpm install
+
+# 3. 运行 Windows 安装脚本
+.\install-windows.ps1
+
+# 4. 验证安装（重新启动 PowerShell 后）
+where.exe 寸止
+```
+
+### Linux 安装
+
+使用通用安装脚本：
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/imhuso/ai-review.git
+cd ai-review
+
+# 2. 安装依赖
+pnpm install
+
+# 3. 构建并安装
+bash install-universal.sh
+
+# 4. 添加到 PATH（如果需要）
+echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+source ~/.bashrc
+
+# 5. 验证安装
+which 寸止
 ```
 
 ### 本地开发
@@ -96,32 +140,36 @@ Tauri 应用 (Vue + Tailwind CSS)
 
 ## 🛠️ MCP 工具
 
-### 1. ai_review_chat - 智能交互工具
+### 1. zhi - 智能交互工具
 
 弹窗交互工具，支持多种输入方式和Markdown渲染。
 
 **主要参数**：
+
 - `message` (必需): 显示给用户的消息内容
 - `predefined_options` (可选): 预定义选项列表，支持多选
 - `is_markdown` (可选): 是否启用Markdown格式渲染
 
 **功能特性**：
+
 - ✅ 预定义选项多选 + 自由文本输入
 - ✅ 图片上传和Base64处理
 - ✅ Markdown渲染和代码高亮
 - ✅ 现代化暗黑主题UI
 
-### 2. memory_manager - 全局记忆管理工具
+### 2. ji - 全局记忆管理工具
 
 智能记忆管理系统，按项目存储开发规范和偏好设置。
 
 **主要参数**：
-- `action` (必需): 操作类型 - `add` 或 `get_project_info`
+
+- `action` (必需): 操作类型 - `记忆` 或 `回忆`
 - `project_path` (必需): 项目路径（git根目录）
-- `content` (add时必需): 记忆内容
+- `content` (记忆时必需): 记忆内容
 - `category` (可选): 分类 - `rule`/`preference`/`pattern`/`context`
 
 **功能特性**：
+
 - ✅ 按项目隔离存储记忆
 - ✅ 智能分类管理（规范/偏好/模式/上下文）
 - ✅ 自动识别"请记住："并添加记忆
@@ -137,9 +185,8 @@ Tauri 应用 (Vue + Tailwind CSS)
 ```json
 {
   "mcpServers": {
-    "ai-review": {
-      "command": "ai-review-mcp",
-      "args": []
+    "寸止": {
+      "command": "寸止"
     }
   }
 }
@@ -151,8 +198,7 @@ Tauri 应用 (Vue + Tailwind CSS)
 {
   "mcpServers": {
     "ai-review": {
-      "command": "/path/to/ai-review/target/release/ai-review-mcp",
-      "args": []
+      "command": "/path/to/ai-review/target/release/ai-review-mcp"
     }
   }
 }
@@ -164,8 +210,8 @@ Tauri 应用 (Vue + Tailwind CSS)
 
 ```json
 {
-  "name": "ai-review",
-  "command": "ai-review-mcp"  // macOS/Linux
+  "name": "寸止",
+  "command": "寸止" // macOS/Linux
   // Windows: "command": "ai-review-mcp.exe"
 }
 ```
@@ -173,6 +219,7 @@ Tauri 应用 (Vue + Tailwind CSS)
 ### Windows 配置说明（未测试）
 
 Windows 用户需要：
+
 1. 确保 `ai-review-mcp.exe` 在系统 PATH 中
 2. 在配置文件中使用 `.exe` 扩展名
 3. 可能需要使用完整路径：`"C:\\path\\to\\ai-review-mcp.exe"`
@@ -217,21 +264,23 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | ./target/release/ai
 
 ### 弹窗测试
 
-通过 Claude Desktop 或其他 MCP 客户端调用 `ai_review_chat` 工具进行测试。
+通过 Claude Desktop 或其他 MCP 客户端调用 `zhi` 工具进行测试。
 
 ## 🔍 故障排除
 
 ### 常见问题
 
 1. **弹窗无法启动**
+
    - 检查应用是否正确安装到 `/Applications/AI Review.app`
-   - 确认命令行工具链接是否正确：`which ai-review-mcp`
+   - 确认命令行工具链接是否正确：`which 寸止`
    - 重新运行安装脚本：`./install.sh`
 
 2. **MCP 服务器无响应**
+
    - 检查可执行文件是否存在：`./target/release/ai-review-mcp`
    - 运行 `cargo build --release` 重新构建
-   - 查看错误日志：`RUST_LOG=debug ai-review-mcp`
+   - 查看错误日志：`RUST_LOG=debug 寸止`
 
 3. **记忆管理问题**
    - 确保在 git 仓库根目录中使用
@@ -241,7 +290,7 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | ./target/release/ai
 
 ```bash
 # 启用详细日志
-RUST_LOG=debug ai-review-mcp
+RUST_LOG=debug 寸止
 
 # 查看记忆文件
 ls -la ~/.ai-review/
@@ -268,6 +317,7 @@ cargo build --release
 ## 🤖 AI 生成说明
 
 **重要提示**: 本项目的所有代码均由 AI 生成，非人工手动编写。包括但不限于：
+
 - Rust 后端代码 (MCP 服务器、记忆管理)
 - Vue 前端代码 (弹窗界面、组件)
 - 配置文件 (Tauri、Vite、ESLint 等)

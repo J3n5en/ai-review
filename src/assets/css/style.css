@@ -1,0 +1,715 @@
+@import 'tailwindcss';
+
+/* 自定义样式 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+}
+
+/* 代码样式 */
+code {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+/* 浅色主题样式 */
+.light {
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+.light .bg-dark-primary {
+  background-color: #f9fafb !important;
+}
+
+.light .bg-dark-secondary {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.light .text-gray-100 {
+  color: #1f2937 !important;
+}
+
+.light .text-gray-300 {
+  color: #4b5563 !important;
+}
+
+.light .text-gray-400 {
+  color: #6b7280 !important;
+}
+
+.light .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+.light .border-gray-700 {
+  border-color: #e5e7eb !important;
+}
+
+.light .border-blue-800 {
+  border-color: #bfdbfe !important;
+}
+
+.light .from-blue-900\/20 {
+  --tw-gradient-from: rgb(30 58 138 / 0.1) var(--tw-gradient-from-position) !important;
+}
+
+.light .to-purple-900\/20 {
+  --tw-gradient-to: rgb(88 28 135 / 0.1) var(--tw-gradient-to-position) !important;
+}
+
+/* 暗黑主题样式 */
+.dark {
+  background-color: #1f1f2b;
+  color: #e5e7eb;
+}
+
+.dark .bg-gray-900 {
+  background-color: #1f1f2b !important;
+}
+
+.dark .bg-gray-800 {
+  background-color: #272b3a !important;
+}
+
+/* 深色模式下的白色背景覆盖 */
+.dark .bg-white {
+  background-color: #272b3a !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #374151 !important;
+}
+
+.dark .bg-gray-200 {
+  background-color: #4b5563 !important;
+}
+
+.dark .bg-gray-300 {
+  background-color: #6b7280 !important;
+}
+
+/* 深色模式下的边框颜色 */
+.dark .border-gray-200 {
+  border-color: #374151 !important;
+}
+
+.dark .border-gray-300 {
+  border-color: #4b5563 !important;
+}
+
+/* 深色模式下的文字颜色 */
+.dark .text-gray-900 {
+  color: #f9fafb !important;
+}
+
+.dark .text-gray-800 {
+  color: #e5e7eb !important;
+}
+
+.dark .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+/* 主题相关的背景色定义 */
+.bg-light-primary {
+  background-color: #ffffff !important;
+}
+
+.bg-light-secondary {
+  background-color: #f9fafb !important;
+}
+
+.bg-dark-primary {
+  background-color: #1f1f2b !important;
+}
+
+.bg-dark-secondary {
+  background-color: #272b3a !important;
+}
+
+/* 确保深色模式下的主背景 */
+.dark .bg-light-primary {
+  background-color: #1f1f2b !important;
+}
+
+.dark .bg-light-secondary {
+  background-color: #272b3a !important;
+}
+
+/* 主题相关的文字颜色定义 */
+.text-light-text {
+  color: #1f2937;
+}
+
+/* 主题相关的边框颜色定义 */
+.border-light-border {
+  border-color: #e5e7eb;
+}
+
+/* 自定义按钮样式 */
+.btn {
+  @apply px-3 py-2 rounded-md font-medium transition-colors text-sm flex items-center gap-1;
+}
+
+.btn-primary {
+  @apply bg-teal-500 text-white hover:bg-teal-600;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+}
+
+.btn-success {
+  @apply bg-green-500 text-white hover:bg-green-600;
+}
+
+.btn-danger {
+  @apply bg-red-500 text-white hover:bg-red-600;
+}
+
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  @apply bg-teal-600 text-white hover:bg-teal-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-700 text-gray-300 hover:bg-gray-600;
+}
+
+/* 浅色模式按钮样式 */
+.light .btn-primary {
+  @apply bg-teal-600 text-white hover:bg-teal-700;
+}
+
+.light .btn-secondary {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+}
+
+.light button:not(.bg-blue-500):not(.btn-primary) {
+  @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+}
+
+.light .bg-gray-700 {
+  background-color: #e5e7eb !important;
+}
+
+.light .text-gray-300 {
+  color: #374151 !important;
+}
+
+.light .hover\:bg-gray-600:hover {
+  background-color: #d1d5db !important;
+}
+
+/* 暗黑模式按钮样式 */
+.dark .btn-secondary {
+  @apply bg-gray-700 text-gray-300 hover:bg-gray-600;
+}
+
+/* 自定义输入框样式 */
+.input,
+.textarea {
+  @apply w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-500 transition-colors;
+  @apply focus:border-teal-500 focus:ring-1 focus:ring-teal-200 focus:outline-none;
+}
+
+.textarea {
+  @apply resize-none;
+}
+
+/* 浅色模式输入框样式 */
+.light .input,
+.light .textarea,
+.light input[type='number'] {
+  @apply bg-white border-gray-300 text-gray-900 placeholder-gray-500;
+  @apply focus:border-teal-500 focus:ring-teal-200;
+}
+
+/* 浅色模式组件背景 */
+.light .bg-dark-primary {
+  background-color: #f9fafb !important;
+}
+
+.light .bg-dark-secondary {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+/* 浅色模式文字颜色 */
+.light .text-gray-100 {
+  color: #1f2937 !important;
+}
+
+.light .text-gray-300 {
+  color: #4b5563 !important;
+}
+
+.light .text-gray-400 {
+  color: #6b7280 !important;
+}
+
+.light .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+/* 浅色模式边框 */
+.light .border-gray-700 {
+  border-color: #e5e7eb !important;
+}
+
+.light .border-gray-600 {
+  border-color: #d1d5db !important;
+}
+
+/* 浅色模式特定样式覆盖 */
+.light .bg-gray-700 {
+  background-color: #ffffff !important;
+}
+
+.light .bg-gray-800\/30 {
+  background-color: rgba(243, 244, 246, 0.5) !important;
+}
+
+.light .border-gray-700\/50 {
+  border-color: rgba(229, 231, 235, 0.8) !important;
+}
+
+/* 浅色模式焦点样式 */
+.light .focus\:border-indigo-500:focus {
+  border-color: #6366f1 !important;
+}
+
+.light .focus\:ring-indigo-500:focus {
+  --tw-ring-color: rgb(99 102 241 / 0.2) !important;
+}
+
+.light .focus\:ring-blue-500:focus {
+  --tw-ring-color: rgb(59 130 246 / 0.2) !important;
+}
+
+.light .focus\:ring-green-500:focus {
+  --tw-ring-color: rgb(34 197 94 / 0.2) !important;
+}
+
+/* 浅色模式开关按钮 */
+.light .bg-blue-600 {
+  background-color: #2563eb !important;
+}
+
+.light .bg-green-600 {
+  background-color: #16a34a !important;
+}
+
+.light .bg-indigo-600 {
+  background-color: #4f46e5 !important;
+}
+
+.light .bg-gray-600 {
+  background-color: #d1d5db !important;
+}
+
+/* 浅色模式悬停效果 */
+.light .hover\:bg-gray-600:hover {
+  background-color: #d1d5db !important;
+}
+
+.light .hover\:bg-blue-700:hover {
+  background-color: #1d4ed8 !important;
+}
+
+.light .hover\:bg-indigo-700:hover {
+  background-color: #4338ca !important;
+}
+
+/* 浅色模式渐变背景 */
+.light .from-blue-900\/20 {
+  --tw-gradient-from: rgb(30 58 138 / 0.1) var(--tw-gradient-from-position) !important;
+}
+
+.light .to-purple-900\/20 {
+  --tw-gradient-to: rgb(88 28 135 / 0.1) var(--tw-gradient-to-position) !important;
+}
+
+/* 浅色模式图标背景 */
+.light .bg-blue-900 {
+  background-color: #dbeafe !important;
+}
+
+.light .bg-purple-900 {
+  background-color: #ede9fe !important;
+}
+
+.light .bg-green-900 {
+  background-color: #dcfce7 !important;
+}
+
+.light .bg-indigo-900 {
+  background-color: #e0e7ff !important;
+}
+
+/* 浅色模式状态指示器 */
+.light .bg-green-900\/30 {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+.light .text-green-300 {
+  color: #16a34a !important;
+}
+
+.light .bg-green-500 {
+  background-color: #22c55e !important;
+}
+
+.light .bg-blue-500 {
+  background-color: #3b82f6 !important;
+}
+
+/* Tab导航样式 */
+.tab-container {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.tab-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.tab-button:first-child {
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+
+.tab-button:last-child {
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+}
+
+/* 防止Tab切换时的跳动 */
+.tab-container {
+  min-height: 44px;
+}
+
+/* Tab内容区域固定高度，防止跳动 */
+.tab-content {
+  min-height: 500px;
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.tab-button:hover::before {
+  left: 100%;
+}
+
+.tab-active {
+  transform: translateY(-1px);
+}
+
+/* 深色模式Tab样式 */
+.dark .tab-inactive {
+  color: #9ca3af !important;
+}
+
+.dark .tab-inactive:hover {
+  color: #d1d5db !important;
+  background-color: rgba(75, 85, 99, 0.5) !important;
+}
+
+.dark .tab-active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* 浅色模式Tab样式 */
+.light .tab-container {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.light .tab-inactive {
+  color: #64748b !important;
+}
+
+.light .tab-inactive:hover {
+  color: #475569 !important;
+  background-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+.light .tab-active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.light .hover\:bg-gray-700\/50:hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+/* 暗黑模式输入框样式 */
+.dark .input,
+.dark .textarea {
+  @apply bg-gray-800 border-gray-600 text-gray-100 placeholder-gray-400;
+  @apply focus:border-teal-400 focus:ring-teal-400/20;
+}
+
+/* 自定义模态框样式 */
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+}
+
+.modal {
+  @apply bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden;
+}
+
+.modal-header {
+  @apply px-5 py-3 border-b border-gray-200 flex items-center justify-between;
+}
+
+.modal-body {
+  @apply px-5 py-4 overflow-y-auto;
+}
+
+.modal-footer {
+  @apply px-5 py-3 border-t border-gray-200 flex justify-end gap-2;
+}
+
+/* 暗黑模式模态框样式 */
+.dark .modal {
+  @apply bg-gray-800;
+}
+
+.dark .modal-header,
+.dark .modal-footer {
+  @apply border-gray-700;
+}
+
+/* 自定义复选框样式 */
+.checkbox {
+  @apply relative inline-flex items-center;
+}
+
+.checkbox input {
+  @apply sr-only;
+}
+
+.checkbox-box {
+  @apply w-4 h-4 border-2 border-gray-300 rounded bg-white transition-colors relative;
+}
+
+.checkbox input:checked + .checkbox-box {
+  @apply bg-teal-500 border-teal-500;
+}
+
+.checkbox input:checked + .checkbox-box::after {
+  content: '✓';
+  @apply absolute top-0 left-0 w-full h-full text-white text-xs flex items-center justify-center;
+}
+
+/* 暗黑模式复选框样式 */
+.dark .checkbox-box {
+  @apply border-gray-600 bg-gray-800;
+}
+
+/* 警告框样式 */
+.alert {
+  @apply px-4 py-3 rounded-lg text-sm;
+}
+
+.alert-info {
+  @apply bg-blue-50 text-blue-800 border border-blue-200;
+}
+
+.alert-success {
+  @apply bg-green-50 text-green-800 border border-green-200;
+}
+
+.alert-warning {
+  @apply bg-yellow-50 text-yellow-800 border border-yellow-200;
+}
+
+.alert-error {
+  @apply bg-red-50 text-red-800 border border-red-200;
+}
+
+/* 暗黑模式警告框样式 */
+.dark .alert-info {
+  @apply bg-blue-900/20 text-blue-300 border-blue-700/30;
+}
+
+.dark .alert-success {
+  @apply bg-green-900/20 text-green-300 border-green-700/30;
+}
+
+.dark .alert-warning {
+  @apply bg-yellow-900/20 text-yellow-300 border-yellow-700/30;
+}
+
+.dark .alert-error {
+  @apply bg-red-900/20 text-red-300 border-red-700/30;
+}
+
+/* 浅色主题参考提示词适配 */
+.light .bg-gray-100 {
+  background-color: #f3f4f6 !important;
+}
+
+.light .text-gray-800 {
+  color: #1f2937 !important;
+}
+
+.light .text-gray-900 {
+  color: #111827 !important;
+}
+
+.light .text-gray-600 {
+  color: #4b5563 !important;
+}
+
+.light .border-gray-200 {
+  border-color: #e5e7eb !important;
+}
+
+.light .bg-orange-100 {
+  background-color: #fed7aa !important;
+}
+
+.light .bg-orange-900 {
+  background-color: #fed7aa !important;
+}
+
+/* 浅色模式下的主题背景色覆盖 */
+.light .bg-dark-primary {
+  background-color: #ffffff !important;
+}
+
+.light .bg-dark-secondary {
+  background-color: #f9fafb !important;
+}
+
+.light .bg-light-primary {
+  background-color: #ffffff !important;
+}
+
+.light .bg-light-secondary {
+  background-color: #f9fafb !important;
+}
+
+/* 浅色模式下的文字颜色覆盖 */
+.light .text-light-text {
+  color: #1f2937 !important;
+}
+
+/* 浅色模式下的边框颜色覆盖 */
+.light .border-light-border {
+  border-color: #e5e7eb !important;
+}
+
+/* 确保参考提示词标题在dark模式下的适配 */
+.dark .text-gray-900 {
+  color: #f9fafb !important;
+}
+
+.dark .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+/* 确保参考提示词内容区域在dark模式下的适配 */
+.dark .text-gray-800 {
+  color: #e5e7eb !important;
+}
+
+/* 弹窗组件浅色模式适配 */
+.light .bg-white {
+  background-color: #ffffff !important;
+}
+
+.light .text-gray-800 {
+  color: #1f2937 !important;
+}
+
+.light .text-gray-600 {
+  color: #4b5563 !important;
+}
+
+.light .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+.light .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.light .text-gray-200 {
+  color: #374151 !important;
+}
+
+.light .border-gray-200 {
+  border-color: #e5e7eb !important;
+}
+
+.light .border-gray-300 {
+  border-color: #d1d5db !important;
+}
+
+.light .border-gray-600 {
+  border-color: #d1d5db !important;
+}
+
+.light .bg-gray-100 {
+  background-color: #f3f4f6 !important;
+}
+
+.light .bg-gray-300 {
+  background-color: #d1d5db !important;
+}
+
+.light .bg-red-50 {
+  background-color: #fef2f2 !important;
+}
+
+.light .text-red-800 {
+  color: #991b1b !important;
+}
+
+.light .border-red-200 {
+  border-color: #fecaca !important;
+}
+
+.light .hover\:bg-blue-50:hover {
+  background-color: #eff6ff !important;
+}
+
+.light .group-hover\:text-blue-700 {
+  color: #1d4ed8 !important;
+}

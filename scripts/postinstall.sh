@@ -29,8 +29,8 @@ if [[ ! -d "/usr/local/bin" ]]; then
 fi
 
 # 定义命令目标
-UI_TARGET="/usr/local/bin/ai-review-ui"
-MCP_TARGET="/usr/local/bin/ai-review-mcp"
+UI_TARGET="/usr/local/bin/等一下"
+MCP_TARGET="/usr/local/bin/寸止"
 
 # 移除旧的符号链接（如果存在）
 for target in "$UI_TARGET" "$MCP_TARGET"; do
@@ -39,32 +39,32 @@ for target in "$UI_TARGET" "$MCP_TARGET"; do
     fi
 done
 
-# 创建 ai-review-ui 符号链接
+# 创建弹窗工具符号链接
 ln -s "$MAIN_BINARY" "$UI_TARGET"
 chmod +x "$UI_TARGET"
-echo "✓ ai-review-ui 命令已创建 -> $MAIN_BINARY"
+echo "✓ 等一下 命令已创建 -> $MAIN_BINARY"
 
 # 检查是否有独立的MCP服务器二进制文件
 MCP_BINARY="$APP_PATH/Contents/MacOS/ai-review-mcp"
 if [[ -f "$MCP_BINARY" ]]; then
     ln -s "$MCP_BINARY" "$MCP_TARGET"
     chmod +x "$MCP_TARGET"
-    echo "✓ ai-review-mcp 命令已创建 -> $MCP_BINARY"
+    echo "✓ 寸止 命令已创建 -> $MCP_BINARY"
 else
     # 如果没有独立的MCP二进制文件，创建一个指向主程序的链接
-    # 主程序应该能够检测到它是以 ai-review-mcp 名称运行的
+    # 主程序应该能够检测到它是以 寸止 名称运行的
     ln -s "$MAIN_BINARY" "$MCP_TARGET"
     chmod +x "$MCP_TARGET"
-    echo "✓ ai-review-mcp 命令已创建 -> $MAIN_BINARY (共享)"
+    echo "✓ 寸止 命令已创建 -> $MAIN_BINARY (共享)"
 fi
 
 echo ""
 echo "🎉 AI Review 安装完成！"
 echo ""
 echo "📋 使用方法:"
-echo "  ai-review-ui                    - 启动UI界面"
-echo "  ai-review-ui --mcp-request file - MCP弹窗模式"
-echo "  ai-review-mcp                   - 启动MCP服务器"
+echo "  等一下                          - 启动UI界面"
+echo "  等一下 --mcp-request file       - MCP弹窗模式"
+echo "  寸止                            - 启动MCP服务器"
 echo ""
 echo "📁 应用位置: /Applications/AI Review.app"
-echo "🔗 命令链接: /usr/local/bin/ai-review-*"
+echo "🔗 命令链接: /usr/local/bin/等一下, /usr/local/bin/寸止"

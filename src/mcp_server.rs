@@ -15,24 +15,28 @@ mod memory;
 use memory::{MemoryManager, MemoryCategory};
 
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
-pub struct AIReviewChatRequest {
+pub struct ZhiRequest {
     #[schemars(description = "要显示给用户的消息")]
     pub message: String,
     #[schemars(description = "预定义的选项列表（可选）")]
     #[serde(default)]
     pub predefined_options: Vec<String>,
-    #[schemars(description = "消息是否为Markdown格式")]
-    #[serde(default)]
+    #[schemars(description = "消息是否为Markdown格式，默认为true")]
+    #[serde(default = "default_is_markdown")]
     pub is_markdown: bool,
 }
 
+fn default_is_markdown() -> bool {
+    true
+}
+
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
-pub struct MemoryManagerRequest {
-    #[schemars(description = "操作类型：add(添加记忆), get_project_info(获取项目信息)")]
+pub struct JiyiRequest {
+    #[schemars(description = "操作类型：记忆(添加记忆), 回忆(获取项目信息)")]
     pub action: String,
     #[schemars(description = "项目路径（必需）")]
     pub project_path: String,
-    #[schemars(description = "记忆内容（add操作时必需）")]
+    #[schemars(description = "记忆内容（记忆操作时必需）")]
     #[serde(default)]
     pub content: String,
     #[schemars(description = "记忆分类：rule(规范规则), preference(用户偏好), pattern(最佳实践), context(项目上下文)")]
@@ -69,20 +73,20 @@ struct ImageSource {
 }
 
 #[derive(Clone)]
-pub struct AIReviewServer {
+pub struct ZhiServer {
     // 可以添加状态字段
 }
 
 #[tool(tool_box)]
-impl AIReviewServer {
+impl ZhiServer {
     pub fn new() -> Self {
         Self {}
     }
 
-    #[tool(description = "AI Review 智能代码审查交互工具，支持预定义选项、自由文本输入和图片上传")]
-    async fn ai_review_chat(
+    #[tool(description = "zhi 智能代码审查交互工具，支持预定义选项、自由文本输入和图片上传")]
+    async fn zhi(
         &self,
-        #[tool(aggr)] request: AIReviewChatRequest,
+        #[tool(aggr)] request: ZhiRequest,
     ) -> Result<CallToolResult, McpError> {
         let popup_request = PopupRequest {
             id: Uuid::new_v4().to_string(),
@@ -107,10 +111,10 @@ impl AIReviewServer {
         }
     }
 
-    #[tool(description = "全局记忆管理工具，用于存储和管理重要的开发规范、用户偏好和最佳实践")]
-    async fn memory_manager(
+    #[tool(description = "ji 全局记忆管理工具，用于存储和管理重要的开发规范、用户偏好和最佳实践")]
+    async fn ji(
         &self,
-        #[tool(aggr)] request: MemoryManagerRequest,
+        #[tool(aggr)] request: JiyiRequest,
     ) -> Result<CallToolResult, McpError> {
         // 检查项目路径是否存在
         if !std::path::Path::new(&request.project_path).exists() {
@@ -124,7 +128,7 @@ impl AIReviewServer {
             .map_err(|e| McpError::internal_error(format!("创建记忆管理器失败: {}", e), None))?;
 
         let result = match request.action.as_str() {
-            "add" => {
+            "记忆" => {
                 if request.content.trim().is_empty() {
                     return Err(McpError::invalid_params("缺少记忆内容".to_string(), None));
                 }
@@ -142,7 +146,7 @@ impl AIReviewServer {
 
                 format!("✅ 记忆已添加，ID: {}\n📝 内容: {}\n📂 分类: {:?}", id, request.content, category)
             }
-            "get_project_info" => {
+            "回忆" => {
                 manager.get_project_info()
                     .map_err(|e| McpError::internal_error(format!("获取项目信息失败: {}", e), None))?
             }
@@ -159,16 +163,16 @@ impl AIReviewServer {
 }
 
 #[tool(tool_box)]
-impl ServerHandler for AIReviewServer {
+impl ServerHandler for ZhiServer {
     fn get_info(&self) -> ServerInfo {
         ServerInfo {
             protocol_version: ProtocolVersion::V_2024_11_05,
             capabilities: ServerCapabilities::builder().enable_tools().build(),
             server_info: Implementation {
-                name: "ai-review-mcp".to_string(),
+                name: "Zhi-mcp".to_string(),
                 version: "0.1.0".to_string(),
             },
-            instructions: Some("AI Review 智能代码审查工具，支持交互式对话和记忆管理".to_string()),
+            instructions: Some("Zhi 智能代码审查工具，支持交互式对话和记忆管理".to_string()),
         }
     }
 
@@ -287,15 +291,16 @@ fn parse_mcp_response(response: &str) -> Result<Vec<Content>, McpError> {
 }
 
 fn create_tauri_popup(request: &PopupRequest) -> Result<String> {
-    // 创建临时请求文件
-    let temp_file = format!("/tmp/mcp_request_{}.json", request.id);
+    // 创建临时请求文件 - 跨平台适配
+    let temp_dir = std::env::temp_dir();
+    let temp_file = temp_dir.join(format!("mcp_request_{}.json", request.id));
     let request_json = serde_json::to_string_pretty(request)?;
     fs::write(&temp_file, request_json)?;
 
-    // 调用全局安装的ai-review-ui命令
-    let output = Command::new("ai-review-ui")
+    // 调用全局安装的等一下命令
+    let output = Command::new("等一下")
         .arg("--mcp-request")
-        .arg(&temp_file)
+        .arg(&temp_file.to_string_lossy().to_string())
         .output()?;
 
     // 清理临时文件
@@ -318,7 +323,7 @@ fn create_tauri_popup(request: &PopupRequest) -> Result<String> {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 创建并运行服务器
-    let service = AIReviewServer::new()
+    let service = ZhiServer::new()
         .serve(stdio())
         .await
         .inspect_err(|e| {

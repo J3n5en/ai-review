@@ -151,9 +151,9 @@ echo ""
 echo "📋 使用方法："
 echo "  🖥️  GUI模式: 在 Applications 中打开 'AI Review'"
 echo "  💻 命令行模式:"
-echo "    ai-review-ui                    - 启动 UI 界面"
-echo "    ai-review-ui --mcp-request file - MCP 弹窗模式"
-echo "    ai-review-mcp                   - 启动 MCP 服务器"
+echo "    等一下                          - 启动 UI 界面"
+echo "    等一下 --mcp-request file       - MCP 弹窗模式"
+echo "    寸止                            - 启动 MCP 服务器"
 echo ""
 echo "📝 配置 MCP 客户端："
 echo "将以下内容添加到您的 MCP 客户端配置中："
@@ -161,9 +161,8 @@ echo ""
 cat << 'EOF'
 {
   "mcpServers": {
-    "ai-review": {
-      "command": "ai-review-mcp",
-      "args": []
+    "寸止": {
+      "command": "寸止"
     }
   }
 }

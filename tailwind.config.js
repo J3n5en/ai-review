@@ -36,6 +36,10 @@ export default {
           primary: '#1f1f2b',
           secondary: '#272b3a',
         },
+        light: {
+          primary: '#ffffff',
+          secondary: '#f9fafb',
+        },
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1rem' }],
