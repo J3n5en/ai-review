@@ -118,14 +118,24 @@ pub async fn send_mcp_response(response: serde_json::Value, state: State<'_, App
         return Err("响应内容不能为空".to_string());
     }
 
-    // 通过channel发送响应（如果有的话）
-    let sender = {
-        let mut channel = state.response_channel.lock().map_err(|e| format!("获取响应通道失败: {}", e))?;
-        channel.take()
-    };
+    // 检查是否为MCP模式
+    let args: Vec<String> = std::env::args().collect();
+    let is_mcp_mode = args.len() >= 3 && args[1] == "--mcp-request";
 
-    if let Some(sender) = sender {
-        let _ = sender.send(response_str);
+    if is_mcp_mode {
+        // MCP模式：直接输出到stdout
+        println!("{}", response_str);
+        std::io::Write::flush(&mut std::io::stdout()).map_err(|e| format!("刷新stdout失败: {}", e))?;
+    } else {
+        // 通过channel发送响应（如果有的话）
+        let sender = {
+            let mut channel = state.response_channel.lock().map_err(|e| format!("获取响应通道失败: {}", e))?;
+            channel.take()
+        };
+
+        if let Some(sender) = sender {
+            let _ = sender.send(response_str);
+        }
     }
 
     Ok(())

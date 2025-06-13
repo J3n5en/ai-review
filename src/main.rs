@@ -50,8 +50,7 @@ pub fn run() {
         .expect("error while running tauri application");
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
+fn main() -> Result<()> {
     // 检查程序是如何被调用的
     let args: Vec<String> = std::env::args().collect();
 

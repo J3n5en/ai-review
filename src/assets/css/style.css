@@ -1,6 +1,150 @@
 @import 'tailwindcss';
 
-/* 自定义样式 */
+/*
+  ===============================
+  AI Review 统一颜色系统
+  ===============================
+  
+  主色调 (Primary): 使用 primary-{shade} 系列
+  - primary-50 到 primary-950: 从最浅到最深的 teal 色调
+  - 主要用于按钮、链接、焦点状态等
+  
+  灰色系 (Gray): 使用 gray-{shade} 系列  
+  - gray-50 到 gray-950: 从最浅到最深的灰色
+  - 用于文本、边框、背景等
+  
+  状态颜色: 使用对应的语义颜色
+  - 成功: green-{shade}
+  - 错误: red-{shade} 
+  - 警告: orange-{shade}
+  - 信息: blue-{shade}
+  
+  主题专用颜色: 
+  - 深色主题: dark-primary, dark-secondary, dark-accent
+  - 浅色主题: light-primary, light-secondary, light-accent
+  
+  使用示例:
+  - 按钮: bg-primary-500 hover:bg-primary-600
+  - 文本: text-gray-900 dark:text-gray-100
+  - 边框: border-gray-300 dark:border-gray-600
+  - 焦点: focus:ring-primary-500 focus:border-primary-500
+  
+  ===============================
+*/
+
+/* Tailwind CSS v4 自定义颜色配置 */
+@theme {
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+  --color-primary-950: #042f2e;
+  
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #030712;
+  
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+  
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #14532d;
+  --color-green-950: #052e16;
+  
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-red-950: #450a0a;
+  
+  --color-orange-50: #fff7ed;
+  --color-orange-100: #ffedd5;
+  --color-orange-200: #fed7aa;
+  --color-orange-300: #fdba74;
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
+  --color-orange-800: #9a3412;
+  --color-orange-900: #7c2d12;
+  --color-orange-950: #431407;
+  
+  --color-purple-50: #faf5ff;
+  --color-purple-100: #f3e8ff;
+  --color-purple-200: #e9d5ff;
+  --color-purple-300: #d8b4fe;
+  --color-purple-400: #c084fc;
+  --color-purple-500: #a855f7;
+  --color-purple-600: #9333ea;
+  --color-purple-700: #7c3aed;
+  --color-purple-800: #6b21a8;
+  --color-purple-900: #581c87;
+  --color-purple-950: #3b0764;
+  
+  /* 主题专用颜色 */
+  --color-dark-primary: #1f1f2b;
+  --color-dark-secondary: #272b3a;
+  --color-dark-accent: #374151;
+  
+  --color-light-primary: #ffffff;
+  --color-light-secondary: #f9fafb;
+  --color-light-accent: #f3f4f6;
+  
+  /* 字体大小定义 */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 0.875rem;
+  --font-size-lg: 1rem;
+  --font-size-xl: 1.125rem;
+  --font-size-2xl: 1.25rem;
+  
+  /* 基础字体设置 */
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  
+  /* 间距定义 */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+}
+
+/* 全局样式重置 */
 * {
   box-sizing: border-box;
 }
@@ -21,695 +165,837 @@ code {
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
-/* 浅色主题样式 */
-.light {
-  background-color: #ffffff;
-  color: #1f2937;
+/* 主题样式 */
+html.light {
+  background-color: var(--color-light-primary);
+  color: var(--color-gray-800);
 }
 
-.light .bg-dark-primary {
-  background-color: #f9fafb !important;
+html.dark {
+  background-color: var(--color-dark-primary);
+  color: var(--color-gray-200);
 }
 
-.light .bg-dark-secondary {
-  background-color: #ffffff !important;
-  border-color: #e5e7eb !important;
+/* 确保主题样式优先级 */
+html.light body {
+  background-color: var(--color-light-primary);
+  color: var(--color-gray-800);
 }
 
-.light .text-gray-100 {
-  color: #1f2937 !important;
+html.dark body {
+  background-color: var(--color-dark-primary);
+  color: var(--color-gray-200);
 }
 
-.light .text-gray-300 {
-  color: #4b5563 !important;
+/* 深色模式下的背景覆盖 - 移除!important，使用更具体的选择器 */
+html.dark .bg-white {
+  background-color: var(--color-dark-secondary);
 }
 
-.light .text-gray-400 {
-  color: #6b7280 !important;
+html.dark .bg-gray-100 {
+  background-color: var(--color-gray-700);
 }
 
-.light .text-gray-500 {
-  color: #9ca3af !important;
-}
-
-.light .border-gray-700 {
-  border-color: #e5e7eb !important;
-}
-
-.light .border-blue-800 {
-  border-color: #bfdbfe !important;
-}
-
-.light .from-blue-900\/20 {
-  --tw-gradient-from: rgb(30 58 138 / 0.1) var(--tw-gradient-from-position) !important;
-}
-
-.light .to-purple-900\/20 {
-  --tw-gradient-to: rgb(88 28 135 / 0.1) var(--tw-gradient-to-position) !important;
-}
-
-/* 暗黑主题样式 */
-.dark {
-  background-color: #1f1f2b;
-  color: #e5e7eb;
-}
-
-.dark .bg-gray-900 {
-  background-color: #1f1f2b !important;
-}
-
-.dark .bg-gray-800 {
-  background-color: #272b3a !important;
-}
-
-/* 深色模式下的白色背景覆盖 */
-.dark .bg-white {
-  background-color: #272b3a !important;
-}
-
-.dark .bg-gray-100 {
-  background-color: #374151 !important;
-}
-
-.dark .bg-gray-200 {
-  background-color: #4b5563 !important;
-}
-
-.dark .bg-gray-300 {
-  background-color: #6b7280 !important;
-}
-
-/* 深色模式下的边框颜色 */
-.dark .border-gray-200 {
-  border-color: #374151 !important;
-}
-
-.dark .border-gray-300 {
-  border-color: #4b5563 !important;
+html.dark .bg-gray-50 {
+  background-color: var(--color-gray-800);
 }
 
 /* 深色模式下的文字颜色 */
-.dark .text-gray-900 {
-  color: #f9fafb !important;
+html.dark .text-gray-900 {
+  color: var(--color-gray-100);
 }
 
-.dark .text-gray-800 {
-  color: #e5e7eb !important;
+html.dark .text-gray-800 {
+  color: var(--color-gray-200);
 }
 
-.dark .text-gray-700 {
-  color: #d1d5db !important;
+html.dark .text-gray-700 {
+  color: var(--color-gray-300);
 }
 
-.dark .text-gray-600 {
-  color: #9ca3af !important;
+html.dark .text-gray-600 {
+  color: var(--color-gray-400);
 }
 
-/* 主题相关的背景色定义 */
-.bg-light-primary {
-  background-color: #ffffff !important;
+/* 深色模式下的边框 */
+html.dark .border-gray-200 {
+  border-color: var(--color-gray-700);
 }
 
-.bg-light-secondary {
-  background-color: #f9fafb !important;
-}
-
-.bg-dark-primary {
-  background-color: #1f1f2b !important;
-}
-
-.bg-dark-secondary {
-  background-color: #272b3a !important;
-}
-
-/* 确保深色模式下的主背景 */
-.dark .bg-light-primary {
-  background-color: #1f1f2b !important;
-}
-
-.dark .bg-light-secondary {
-  background-color: #272b3a !important;
-}
-
-/* 主题相关的文字颜色定义 */
-.text-light-text {
-  color: #1f2937;
-}
-
-/* 主题相关的边框颜色定义 */
-.border-light-border {
-  border-color: #e5e7eb;
+html.dark .border-gray-300 {
+  border-color: var(--color-gray-600);
 }
 
 /* 自定义按钮样式 */
 .btn {
-  @apply px-3 py-2 rounded-md font-medium transition-colors text-sm flex items-center gap-1;
+  @apply px-3 py-2 rounded-md font-medium transition-colors text-xs flex items-center gap-1;
 }
 
 .btn-primary {
-  @apply bg-teal-500 text-white hover:bg-teal-600;
+  @apply bg-primary-500 text-white hover:bg-primary-600 focus:ring-2 focus:ring-primary-200;
+}
+
+html.dark .btn-primary {
+  --tw-ring-color: var(--color-primary-800);
 }
 
 .btn-secondary {
   @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
 }
 
+html.dark .btn-secondary {
+  background-color: var(--color-gray-700);
+  color: var(--color-gray-300);
+}
+
+html.dark .btn-secondary:hover {
+  background-color: var(--color-gray-600);
+}
+
 .btn-success {
-  @apply bg-green-500 text-white hover:bg-green-600;
+  @apply bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-200;
 }
 
 .btn-danger {
-  @apply bg-red-500 text-white hover:bg-red-600;
+  @apply bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-200;
 }
 
 .btn:disabled {
   @apply opacity-50 cursor-not-allowed;
 }
 
-/* 按钮样式 */
-.btn-primary {
-  @apply bg-teal-600 text-white hover:bg-teal-700;
-}
-
-.btn-secondary {
-  @apply bg-gray-700 text-gray-300 hover:bg-gray-600;
-}
-
-/* 浅色模式按钮样式 */
-.light .btn-primary {
-  @apply bg-teal-600 text-white hover:bg-teal-700;
-}
-
-.light .btn-secondary {
-  @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
-}
-
-.light button:not(.bg-blue-500):not(.btn-primary) {
-  @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
-}
-
-.light .bg-gray-700 {
-  background-color: #e5e7eb !important;
-}
-
-.light .text-gray-300 {
-  color: #374151 !important;
-}
-
-.light .hover\:bg-gray-600:hover {
-  background-color: #d1d5db !important;
-}
-
-/* 暗黑模式按钮样式 */
-.dark .btn-secondary {
-  @apply bg-gray-700 text-gray-300 hover:bg-gray-600;
-}
-
-/* 自定义输入框样式 */
+/* 输入框样式 */
 .input,
 .textarea {
-  @apply w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-500 transition-colors;
-  @apply focus:border-teal-500 focus:ring-1 focus:ring-teal-200 focus:outline-none;
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+  @apply bg-white text-gray-900 transition-colors duration-200 text-xs;
+}
+
+html.dark .input,
+html.dark .textarea {
+  background-color: var(--color-gray-700);
+  color: var(--color-gray-100);
+  border-color: var(--color-gray-600);
 }
 
 .textarea {
   @apply resize-none;
 }
 
-/* 浅色模式输入框样式 */
-.light .input,
-.light .textarea,
-.light input[type='number'] {
-  @apply bg-white border-gray-300 text-gray-900 placeholder-gray-500;
-  @apply focus:border-teal-500 focus:ring-teal-200;
+/* 主题背景样式 */
+.bg-light-primary {
+  background-color: var(--color-light-primary);
 }
 
-/* 浅色模式组件背景 */
-.light .bg-dark-primary {
-  background-color: #f9fafb !important;
+.bg-light-secondary {
+  background-color: var(--color-light-secondary);
 }
 
-.light .bg-dark-secondary {
-  background-color: #ffffff !important;
-  border-color: #e5e7eb !important;
+.bg-dark-primary {
+  background-color: var(--color-dark-primary);
 }
 
-/* 浅色模式文字颜色 */
-.light .text-gray-100 {
-  color: #1f2937 !important;
+.bg-dark-secondary {
+  background-color: var(--color-dark-secondary);
 }
 
-.light .text-gray-300 {
-  color: #4b5563 !important;
-}
-
-.light .text-gray-400 {
-  color: #6b7280 !important;
-}
-
-.light .text-gray-500 {
-  color: #9ca3af !important;
-}
-
-/* 浅色模式边框 */
-.light .border-gray-700 {
-  border-color: #e5e7eb !important;
-}
-
-.light .border-gray-600 {
-  border-color: #d1d5db !important;
-}
-
-/* 浅色模式特定样式覆盖 */
-.light .bg-gray-700 {
-  background-color: #ffffff !important;
-}
-
-.light .bg-gray-800\/30 {
-  background-color: rgba(243, 244, 246, 0.5) !important;
-}
-
-.light .border-gray-700\/50 {
-  border-color: rgba(229, 231, 235, 0.8) !important;
-}
-
-/* 浅色模式焦点样式 */
-.light .focus\:border-indigo-500:focus {
-  border-color: #6366f1 !important;
-}
-
-.light .focus\:ring-indigo-500:focus {
-  --tw-ring-color: rgb(99 102 241 / 0.2) !important;
-}
-
-.light .focus\:ring-blue-500:focus {
-  --tw-ring-color: rgb(59 130 246 / 0.2) !important;
-}
-
-.light .focus\:ring-green-500:focus {
-  --tw-ring-color: rgb(34 197 94 / 0.2) !important;
-}
-
-/* 浅色模式开关按钮 */
-.light .bg-blue-600 {
-  background-color: #2563eb !important;
-}
-
-.light .bg-green-600 {
-  background-color: #16a34a !important;
-}
-
-.light .bg-indigo-600 {
-  background-color: #4f46e5 !important;
-}
-
-.light .bg-gray-600 {
-  background-color: #d1d5db !important;
-}
-
-/* 浅色模式悬停效果 */
-.light .hover\:bg-gray-600:hover {
-  background-color: #d1d5db !important;
-}
-
-.light .hover\:bg-blue-700:hover {
-  background-color: #1d4ed8 !important;
-}
-
-.light .hover\:bg-indigo-700:hover {
-  background-color: #4338ca !important;
-}
-
-/* 浅色模式渐变背景 */
-.light .from-blue-900\/20 {
-  --tw-gradient-from: rgb(30 58 138 / 0.1) var(--tw-gradient-from-position) !important;
-}
-
-.light .to-purple-900\/20 {
-  --tw-gradient-to: rgb(88 28 135 / 0.1) var(--tw-gradient-to-position) !important;
-}
-
-/* 浅色模式图标背景 */
-.light .bg-blue-900 {
-  background-color: #dbeafe !important;
-}
-
-.light .bg-purple-900 {
-  background-color: #ede9fe !important;
-}
-
-.light .bg-green-900 {
-  background-color: #dcfce7 !important;
-}
-
-.light .bg-indigo-900 {
-  background-color: #e0e7ff !important;
-}
-
-/* 浅色模式状态指示器 */
-.light .bg-green-900\/30 {
-  background-color: rgba(34, 197, 94, 0.1) !important;
-}
-
-.light .text-green-300 {
-  color: #16a34a !important;
-}
-
-.light .bg-green-500 {
-  background-color: #22c55e !important;
-}
-
-.light .bg-blue-500 {
-  background-color: #3b82f6 !important;
-}
-
-/* Tab导航样式 */
+/* Tab样式 */
 .tab-container {
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  @apply bg-gray-100 rounded-lg p-1 border border-gray-300 flex;
+}
+
+html.dark .tab-container {
+  background-color: var(--color-dark-secondary);
+  border-color: var(--color-gray-700);
 }
 
 .tab-button {
+  @apply px-6 py-2 rounded-md text-sm font-medium relative z-10;
+  @apply text-gray-600 hover:text-gray-900;
   position: relative;
-  overflow: hidden;
-  border-radius: 0;
-  min-width: 120px;
-  white-space: nowrap;
 }
 
-.tab-button:first-child {
-  border-top-left-radius: 0.375rem;
-  border-bottom-left-radius: 0.375rem;
+html.dark .tab-button {
+  color: var(--color-gray-400);
 }
 
-.tab-button:last-child {
-  border-top-right-radius: 0.375rem;
-  border-bottom-right-radius: 0.375rem;
-}
-
-/* 防止Tab切换时的跳动 */
-.tab-container {
-  min-height: 44px;
-}
-
-/* Tab内容区域固定高度，防止跳动 */
-.tab-content {
-  min-height: 500px;
+html.dark .tab-button:hover {
+  color: var(--color-gray-100);
 }
 
 .tab-button::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(20, 184, 166, 0.05));
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .tab-button:hover::before {
-  left: 100%;
+  opacity: 1;
 }
 
 .tab-active {
-  transform: translateY(-1px);
+  @apply bg-white text-primary-600 shadow-sm border border-gray-200;
 }
 
-/* 深色模式Tab样式 */
-.dark .tab-inactive {
-  color: #9ca3af !important;
+html.dark .tab-active {
+  background-color: var(--color-gray-700);
+  color: var(--color-primary-400);
+  border-color: var(--color-gray-600);
 }
 
-.dark .tab-inactive:hover {
-  color: #d1d5db !important;
-  background-color: rgba(75, 85, 99, 0.5) !important;
+.tab-inactive {
+  @apply text-gray-600 hover:text-gray-900 hover:bg-gray-50;
 }
 
-.dark .tab-active {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
+html.dark .tab-inactive {
+  color: var(--color-gray-400);
 }
 
-/* 浅色模式Tab样式 */
-.light .tab-container {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+html.dark .tab-inactive:hover {
+  color: var(--color-gray-100);
+  background-color: rgba(55, 65, 81, 0.5);
 }
 
-.light .tab-inactive {
-  color: #64748b !important;
+/* Tab内容区域样式 */
+.tab-content {
 }
 
-.light .tab-inactive:hover {
-  color: #475569 !important;
-  background-color: rgba(148, 163, 184, 0.1) !important;
+/* 通用卡片样式 */
+.card {
+  @apply bg-white rounded-xl p-6 shadow-lg border border-gray-200;
+  /* 移除transition避免动画 */
 }
 
-.light .tab-active {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
+html.dark .card {
+  background-color: var(--color-dark-secondary);
+  border-color: var(--color-gray-700);
 }
 
-.light .hover\:bg-gray-700\/50:hover {
-  background-color: rgba(148, 163, 184, 0.1) !important;
+.card-header {
+  @apply flex items-center mb-6;
 }
 
-/* 暗黑模式输入框样式 */
-.dark .input,
-.dark .textarea {
-  @apply bg-gray-800 border-gray-600 text-gray-100 placeholder-gray-400;
-  @apply focus:border-teal-400 focus:ring-teal-400/20;
+.card-header .flex-1 {
+  @apply flex-1;
 }
 
-/* 自定义模态框样式 */
+.card-icon {
+  @apply w-12 h-12 rounded-lg flex items-center justify-center mr-4;
+  /* 移除transition避免动画 */
+}
+
+.card-title {
+  @apply text-lg font-semibold text-gray-900;
+  /* 移除transition避免动画 */
+}
+
+html.dark .card-title {
+  color: var(--color-gray-100);
+}
+
+.card-subtitle {
+  @apply text-sm text-gray-600;
+  /* 移除transition避免动画 */
+}
+
+html.dark .card-subtitle {
+  color: var(--color-gray-400);
+}
+
+/* 卡片背景样式 */
+.card-bg {
+  @apply bg-white;
+}
+
+html.dark .card-bg {
+  background-color: var(--color-dark-secondary);
+}
+
+.card-bg-secondary {
+  @apply bg-gray-50;
+}
+
+html.dark .card-bg-secondary {
+  background-color: var(--color-dark-primary);
+}
+
+.card-bg-accent {
+  @apply bg-gray-100;
+}
+
+html.dark .card-bg-accent {
+  background-color: var(--color-gray-800);
+}
+
+/* 卡片文字样式 */
+.card-text {
+  @apply text-gray-900;
+}
+
+html.dark .card-text {
+  color: var(--color-gray-100);
+}
+
+.card-text-secondary {
+  @apply text-gray-600;
+}
+
+html.dark .card-text-secondary {
+  color: var(--color-gray-400);
+}
+
+/* 卡片边框样式 */
+.card-border {
+  @apply border-gray-200;
+}
+
+html.dark .card-border {
+  border-color: var(--color-gray-600);
+}
+
+/* 悬停背景样式 */
+.hover-bg {
+  @apply hover:bg-gray-100;
+}
+
+html.dark .hover-bg:hover {
+  background-color: var(--color-gray-700);
+}
+
+/* 弹窗专用Markdown文字样式 - 增强对比度 */
+.popup-markdown-text {
+  @apply text-gray-900;
+  color: var(--color-gray-900);
+}
+
+html.dark .popup-markdown-text {
+  color: var(--color-gray-100);
+}
+
+/* 弹窗Markdown内容增强样式 */
+.popup-markdown-text .markdown-content h1,
+.popup-markdown-text .markdown-content h2,
+.popup-markdown-text .markdown-content h3,
+.popup-markdown-text .markdown-content h4,
+.popup-markdown-text .markdown-content h5,
+.popup-markdown-text .markdown-content h6 {
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+html.dark .popup-markdown-text .markdown-content h1,
+html.dark .popup-markdown-text .markdown-content h2,
+html.dark .popup-markdown-text .markdown-content h3,
+html.dark .popup-markdown-text .markdown-content h4,
+html.dark .popup-markdown-text .markdown-content h5,
+html.dark .popup-markdown-text .markdown-content h6 {
+  color: var(--color-gray-100);
+}
+
+.popup-markdown-text .markdown-content p {
+  color: var(--color-gray-800);
+  line-height: 1.6;
+}
+
+html.dark .popup-markdown-text .markdown-content p {
+  color: var(--color-gray-200);
+}
+
+.popup-markdown-text .markdown-content li {
+  color: var(--color-gray-800);
+}
+
+html.dark .popup-markdown-text .markdown-content li {
+  color: var(--color-gray-200);
+}
+
+.popup-markdown-text .markdown-content strong {
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+html.dark .popup-markdown-text .markdown-content strong {
+  color: var(--color-gray-100);
+}
+
+/* McpPopup 深色模式样式 */
+html.dark .popup-container {
+  background-color: var(--color-dark-primary);
+}
+
+html.dark .popup-content {
+  background-color: var(--color-dark-primary);
+}
+
+html.dark .popup-container .bg-white {
+  background-color: var(--color-dark-secondary);
+}
+
+html.dark .popup-container .bg-light-secondary {
+  background-color: var(--color-dark-primary);
+}
+
+html.dark .popup-container .text-gray-600 {
+  color: var(--color-gray-400);
+}
+
+html.dark .popup-container .border-gray-200 {
+  border-color: var(--color-gray-700);
+}
+
+html.dark .popup-container .hover\:bg-gray-100:hover {
+  background-color: var(--color-gray-700);
+}
+
+/* ThemeSettings 深色模式样式 */
+html.dark .card .bg-purple-100 {
+  background-color: var(--color-purple-900);
+}
+
+/* 移除重复规则，已在全局定义 */
+
+/* App.vue 深色模式样式 */
+html.dark #app {
+  background-color: var(--color-dark-primary);
+}
+
+html.dark .card .bg-blue-100 {
+  background-color: var(--color-blue-900);
+}
+
+html.dark .card .bg-orange-100 {
+  background-color: var(--color-orange-900);
+}
+
+html.dark .bg-primary-50 {
+  background-color: rgba(20, 184, 166, 0.1);
+}
+
+html.dark .text-primary-700 {
+  color: var(--color-primary-300);
+}
+
+html.dark .border-primary-200 {
+  border-color: rgba(20, 184, 166, 0.3);
+}
+
+html.dark .bg-gray-100 {
+  background-color: var(--color-gray-900);
+}
+
+html.dark .text-gray-800 {
+  color: var(--color-gray-300);
+}
+
+/* WindowSettings 和 ReplySettings 深色模式样式 */
+html.dark .card .bg-green-100 {
+  background-color: var(--color-green-900);
+}
+
+/* 移除重复的全局样式规则，避免冗余 */
+html.dark .focus\:ring-offset-white:focus {
+  --tw-ring-offset-color: var(--color-gray-800);
+}
+
+/* Modal样式 */
 .modal-overlay {
   @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
 }
 
 .modal {
-  @apply bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden;
+  @apply bg-white rounded-lg shadow-xl max-w-md w-full mx-4;
+}
+
+html.dark .modal {
+  background-color: var(--color-gray-800);
 }
 
 .modal-header {
-  @apply px-5 py-3 border-b border-gray-200 flex items-center justify-between;
+  @apply px-6 py-4 border-b border-gray-200;
+}
+
+html.dark .modal-header {
+  border-color: var(--color-gray-700);
 }
 
 .modal-body {
-  @apply px-5 py-4 overflow-y-auto;
+  @apply px-6 py-4;
 }
 
 .modal-footer {
-  @apply px-5 py-3 border-t border-gray-200 flex justify-end gap-2;
+  @apply px-6 py-4 border-t border-gray-200 flex justify-end gap-2;
 }
 
-/* 暗黑模式模态框样式 */
-.dark .modal {
-  @apply bg-gray-800;
+html.dark .modal-footer {
+  border-color: var(--color-gray-700);
 }
 
-.dark .modal-header,
-.dark .modal-footer {
-  @apply border-gray-700;
-}
-
-/* 自定义复选框样式 */
+/* Checkbox样式 */
 .checkbox {
-  @apply relative inline-flex items-center;
+  @apply relative;
 }
 
 .checkbox input {
-  @apply sr-only;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 .checkbox-box {
-  @apply w-4 h-4 border-2 border-gray-300 rounded bg-white transition-colors relative;
+  @apply w-4 h-4 border-2 border-gray-300 dark:border-gray-600 rounded;
+  @apply transition-colors duration-200 relative;
 }
 
 .checkbox input:checked + .checkbox-box {
-  @apply bg-teal-500 border-teal-500;
+  @apply bg-primary-500 border-primary-500;
 }
 
 .checkbox input:checked + .checkbox-box::after {
   content: '✓';
-  @apply absolute top-0 left-0 w-full h-full text-white text-xs flex items-center justify-center;
+  @apply absolute inset-0 text-white text-xs flex items-center justify-center;
 }
 
-/* 暗黑模式复选框样式 */
-.dark .checkbox-box {
-  @apply border-gray-600 bg-gray-800;
-}
-
-/* 警告框样式 */
+/* Alert样式 */
 .alert {
-  @apply px-4 py-3 rounded-lg text-sm;
+  @apply px-4 py-3 rounded-md border-l-4;
 }
 
 .alert-info {
-  @apply bg-blue-50 text-blue-800 border border-blue-200;
+  @apply bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-300;
 }
 
 .alert-success {
-  @apply bg-green-50 text-green-800 border border-green-200;
+  @apply bg-green-50 dark:bg-green-900/20 border-green-500 text-green-700 dark:text-green-300;
 }
 
 .alert-warning {
-  @apply bg-yellow-50 text-yellow-800 border border-yellow-200;
+  @apply bg-orange-50 dark:bg-orange-900/20 border-orange-500 text-orange-700 dark:text-orange-300;
 }
 
 .alert-error {
-  @apply bg-red-50 text-red-800 border border-red-200;
+  @apply bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300;
 }
 
-/* 暗黑模式警告框样式 */
-.dark .alert-info {
-  @apply bg-blue-900/20 text-blue-300 border-blue-700/30;
+/* 动画和过渡效果 */
+.popup-container {
+  @apply fixed inset-0 z-50 flex items-center justify-center;
+  background-color: var(--color-light-primary);
 }
 
-.dark .alert-success {
-  @apply bg-green-900/20 text-green-300 border-green-700/30;
+html.dark .popup-container {
+  background-color: var(--color-dark-primary);
 }
 
-.dark .alert-warning {
-  @apply bg-yellow-900/20 text-yellow-300 border-yellow-700/30;
+.popup-content {
+  animation: fadeIn 0.3s ease-out, slideIn 0.3s ease-out;
+  background-color: var(--color-light-primary);
 }
 
-.dark .alert-error {
-  @apply bg-red-900/20 text-red-300 border-red-700/30;
+html.dark .popup-content {
+  background-color: var(--color-dark-primary);
 }
 
-/* 浅色主题参考提示词适配 */
-.light .bg-gray-100 {
-  background-color: #f3f4f6 !important;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.light .text-gray-800 {
-  color: #1f2937 !important;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.light .text-gray-900 {
-  color: #111827 !important;
+/* 平滑按钮效果 */
+.smooth-button {
+  @apply transition-colors duration-200 ease-in-out;
 }
 
-.light .text-gray-600 {
-  color: #4b5563 !important;
+.smooth-button:hover:not(:disabled) {
+  @apply shadow-md;
 }
 
-.light .border-gray-200 {
-  border-color: #e5e7eb !important;
+.smooth-button:active:not(:disabled) {
+  @apply opacity-90;
 }
 
-.light .bg-orange-100 {
-  background-color: #fed7aa !important;
+/* 平滑文本域效果 */
+.smooth-textarea {
+  @apply transition-colors duration-200 ease-in-out;
 }
 
-.light .bg-orange-900 {
-  background-color: #fed7aa !important;
+.smooth-textarea:focus {
 }
 
-/* 浅色模式下的主题背景色覆盖 */
-.light .bg-dark-primary {
-  background-color: #ffffff !important;
+/* 自动调整大小的文本域 */
+.auto-resize-textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 60px;
+  max-height: 200px;
 }
 
-.light .bg-dark-secondary {
-  background-color: #f9fafb !important;
+/* 平滑选项效果 */
+.smooth-option {
+  @apply transition-colors duration-200 ease-in-out;
 }
 
-.light .bg-light-primary {
-  background-color: #ffffff !important;
+.smooth-option:hover {
+  @apply shadow-sm;
 }
 
-.light .bg-light-secondary {
-  background-color: #f9fafb !important;
+.smooth-option:active {
+  @apply opacity-95;
 }
 
-/* 浅色模式下的文字颜色覆盖 */
-.light .text-light-text {
-  color: #1f2937 !important;
+/* Markdown内容样式 */
+.markdown-content {
+  @apply text-sm leading-relaxed;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-/* 浅色模式下的边框颜色覆盖 */
-.light .border-light-border {
-  border-color: #e5e7eb !important;
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  @apply font-bold mb-2 mt-4 text-gray-900 dark:text-gray-100;
 }
 
-/* 确保参考提示词标题在dark模式下的适配 */
-.dark .text-gray-900 {
-  color: #f9fafb !important;
+.markdown-content h1 {
+  @apply text-lg;
 }
 
-.dark .text-gray-600 {
-  color: #9ca3af !important;
+.markdown-content h2 {
+  @apply text-base;
 }
 
-/* 确保参考提示词内容区域在dark模式下的适配 */
-.dark .text-gray-800 {
-  color: #e5e7eb !important;
+.markdown-content h3 {
+  @apply text-sm;
 }
 
-/* 弹窗组件浅色模式适配 */
-.light .bg-white {
-  background-color: #ffffff !important;
+.markdown-content h4 {
+  @apply text-sm;
 }
 
-.light .text-gray-800 {
-  color: #1f2937 !important;
+.markdown-content h5 {
+  @apply text-xs;
 }
 
-.light .text-gray-600 {
-  color: #4b5563 !important;
+.markdown-content h6 {
+  @apply text-xs;
 }
 
-.light .text-gray-500 {
-  color: #6b7280 !important;
+.markdown-content p {
+  @apply mb-3 text-gray-700 dark:text-gray-300;
+  line-height: 1.6;
 }
 
-.light .text-gray-400 {
-  color: #9ca3af !important;
+.markdown-content ul,
+.markdown-content ol {
+  @apply mb-3 pl-4;
+  padding-left: 1.2em;
 }
 
-.light .text-gray-200 {
-  color: #374151 !important;
+.markdown-content li {
+  @apply mb-1 text-gray-700 dark:text-gray-300;
+  line-height: 1.5;
 }
 
-.light .border-gray-200 {
-  border-color: #e5e7eb !important;
+.markdown-content blockquote {
+  @apply border-l-4 border-gray-300 dark:border-gray-600 pl-4 mb-3;
+  @apply italic text-gray-600 dark:text-gray-400;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 0.5em 1em;
 }
 
-.light .border-gray-300 {
-  border-color: #d1d5db !important;
+html.dark .markdown-content blockquote {
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.light .border-gray-600 {
-  border-color: #d1d5db !important;
+.markdown-content pre {
+  @apply bg-gray-100 rounded-md p-3 mb-3 overflow-x-auto text-xs;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
-.light .bg-gray-100 {
-  background-color: #f3f4f6 !important;
+html.dark .markdown-content pre {
+  background-color: var(--color-gray-800);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.light .bg-gray-300 {
-  background-color: #d1d5db !important;
+html.dark .markdown-content pre code,
+html.dark .markdown-content .hljs {
+  @apply bg-transparent text-gray-200;
 }
 
-.light .bg-red-50 {
-  background-color: #fef2f2 !important;
+html.dark .markdown-content .hljs {
+  background: transparent !important;
 }
 
-.light .text-red-800 {
-  color: #991b1b !important;
+html.dark .markdown-content .hljs-keyword,
+html.dark .markdown-content .hljs-selector-tag,
+html.dark .markdown-content .hljs-title,
+html.dark .markdown-content .hljs-section,
+html.dark .markdown-content .hljs-doctag,
+html.dark .markdown-content .hljs-name,
+html.dark .markdown-content .hljs-strong {
+  color: #f59e0b;
 }
 
-.light .border-red-200 {
-  border-color: #fecaca !important;
+html.dark .markdown-content .hljs-string {
+  color: #34d399;
 }
 
-.light .hover\:bg-blue-50:hover {
-  background-color: #eff6ff !important;
+html.dark .markdown-content .hljs-comment {
+  color: #9ca3af;
 }
 
-.light .group-hover\:text-blue-700 {
-  color: #1d4ed8 !important;
+html.dark .markdown-content .hljs-number {
+  color: #60a5fa;
+}
+
+html.dark .markdown-content .hljs-function,
+html.dark .markdown-content .hljs-class,
+html.dark .markdown-content .hljs-title.class_,
+html.dark .markdown-content .hljs-title.function_ {
+  color: #a78bfa;
+}
+
+.markdown-content code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-xs text-gray-800;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.85em;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+html.dark .markdown-content code {
+  background-color: rgba(55, 65, 81, 0.7);
+  color: #e5e7eb;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0 text-xs;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+.markdown-content a {
+  @apply text-primary-600 hover:text-primary-700 underline transition-colors duration-200;
+}
+
+html.dark .markdown-content a {
+  color: var(--color-primary-400);
+}
+
+html.dark .markdown-content a:hover {
+  color: var(--color-primary-300);
+}
+
+.markdown-content strong {
+  @apply font-semibold text-gray-900;
+}
+
+html.dark .markdown-content strong {
+  color: var(--color-gray-100);
+}
+
+.markdown-content em {
+  @apply italic;
+}
+
+.markdown-content hr {
+  @apply border-0 border-t border-gray-200 my-4;
+}
+
+html.dark .markdown-content hr {
+  border-color: var(--color-gray-700);
+}
+
+/* 消息容器动画 */
+.message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.message-item {
+  @apply mb-3 p-4 rounded-lg shadow-lg border;
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+html.dark .message-item {
+  background: rgba(39, 43, 58, 0.9);
+}
+
+.message-success {
+  @apply border-green-200 text-green-800;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+html.dark .message-success {
+  border-color: var(--color-green-800);
+  color: var(--color-green-200);
+}
+
+.message-error {
+  @apply border-red-200 text-red-800;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+html.dark .message-error {
+  border-color: var(--color-red-800);
+  color: var(--color-red-200);
+}
+
+.message-info {
+  @apply border-blue-200 text-blue-800;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+html.dark .message-info {
+  border-color: var(--color-blue-800);
+  color: var(--color-blue-200);
+}
+
+.message-warning {
+  @apply border-orange-200 text-orange-800;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+html.dark .message-warning {
+  border-color: var(--color-orange-800);
+  color: var(--color-orange-200);
 }

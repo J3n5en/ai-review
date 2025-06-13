@@ -2,14 +2,14 @@
 name = "ai-review"
 version = "0.1.0"
 edition = "2021"
-default-run = "ai-review-ui"
+default-run = "等一下"
 
 [[bin]]
-name = "ai-review-ui"
+name = "等一下"
 path = "src/main.rs"
 
 [[bin]]
-name = "ai-review-mcp"
+name = "寸止"
 path = "src/bin/mcp_server.rs"
 
 [dependencies]

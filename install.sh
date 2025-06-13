@@ -44,7 +44,7 @@ while [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; do
             echo "❌ Tauri 构建失败，已达到最大重试次数"
 
             # 检查是否有部分构建产物
-            if [[ -f "target/release/ai-review-ui" ]] && [[ -f "target/release/ai-review-mcp" ]]; then
+            if [[ -f "target/release/等一下" ]] && [[ -f "target/release/寸止" ]]; then
                 echo "🔧 检测到二进制文件，尝试手动创建 App Bundle..."
 
                 # 手动创建 App Bundle
@@ -53,8 +53,8 @@ while [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; do
                 mkdir -p "$APP_BUNDLE/Contents/Resources"
 
                 # 复制二进制文件
-                cp "target/release/ai-review-ui" "$APP_BUNDLE/Contents/MacOS/"
-                cp "target/release/ai-review-mcp" "$APP_BUNDLE/Contents/MacOS/"
+                cp "target/release/等一下" "$APP_BUNDLE/Contents/MacOS/"
+                cp "target/release/寸止" "$APP_BUNDLE/Contents/MacOS/"
 
                 # 复制图标（如果存在）
                 if [[ -f "icons/icon.icns" ]]; then
@@ -70,7 +70,7 @@ while [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; do
     <key>CFBundleDisplayName</key>
     <string>AI Review</string>
     <key>CFBundleExecutable</key>
-    <string>ai-review-ui</string>
+    <string>等一下</string>
     <key>CFBundleIconFile</key>
     <string>icon.icns</string>
     <key>CFBundleIdentifier</key>

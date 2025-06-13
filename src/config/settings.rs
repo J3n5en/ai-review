@@ -95,7 +95,7 @@ pub fn default_reply_config() -> ReplyConfig {
     ReplyConfig {
         enable_continue_reply: true,
         auto_continue_threshold: 1000,
-        continue_prompt: "请继续".to_string(),
+        continue_prompt: "请按照最佳实践继续".to_string(),
     }
 }
 
@@ -128,5 +128,5 @@ pub fn default_auto_continue_threshold() -> u32 {
 }
 
 pub fn default_continue_prompt() -> String {
-    "请继续".to_string()
+    "请按照最佳实践继续".to_string()
 }

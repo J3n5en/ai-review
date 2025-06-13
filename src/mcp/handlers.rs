@@ -1,119 +1,37 @@
 use anyhow::Result;
-use rmcp::{
-    Error as McpError,
-    model::*,
-    tool,
-};
+use rmcp::{Error as McpError, model::*};
 use std::process::Command;
 use std::fs;
-use uuid::Uuid;
 
-use crate::memory::{MemoryManager, MemoryCategory};
-use super::types::{ZhiRequest, JiyiRequest};
-use super::server::ZhiServer;
+use super::types::{PopupRequest, McpResponseContent};
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct PopupRequest {
-    id: String,
-    message: String,
-    predefined_options: Option<Vec<String>>,
-    is_markdown: bool,
-}
+pub fn create_tauri_popup(request: &PopupRequest) -> Result<String> {
+    // 创建临时请求文件 - 跨平台适配
+    let temp_dir = std::env::temp_dir();
+    let temp_file = temp_dir.join(format!("mcp_request_{}.json", request.id));
+    let request_json = serde_json::to_string_pretty(request)?;
+    fs::write(&temp_file, request_json)?;
 
-#[derive(Debug, serde::Deserialize)]
-struct McpResponseContent {
-    #[serde(rename = "type")]
-    content_type: String,
-    text: Option<String>,
-    source: Option<ImageSource>,
-}
+    // 调用全局安装的等一下命令（弹窗UI）
+    let output = Command::new("等一下")
+        .arg("--mcp-request")
+        .arg(&temp_file.to_string_lossy().to_string())
+        .output()?;
 
-#[derive(Debug, serde::Deserialize)]
-struct ImageSource {
-    #[serde(rename = "type")]
-    source_type: String,
-    media_type: String,
-    data: String,
-}
+    // 清理临时文件
+    let _ = fs::remove_file(&temp_file);
 
-#[tool(tool_box)]
-impl ZhiServer {
-    #[tool(description = "zhi 智能代码审查交互工具，支持预定义选项、自由文本输入和图片上传")]
-    pub async fn zhi(
-        &self,
-        #[tool(aggr)] request: ZhiRequest,
-    ) -> Result<CallToolResult, McpError> {
-        let popup_request = PopupRequest {
-            id: Uuid::new_v4().to_string(),
-            message: request.message,
-            predefined_options: if request.predefined_options.is_empty() {
-                None
-            } else {
-                Some(request.predefined_options)
-            },
-            is_markdown: request.is_markdown,
-        };
-
-        match create_tauri_popup(&popup_request) {
-            Ok(response) => {
-                // 解析响应内容，支持文本和图片
-                let content = parse_mcp_response(&response)?;
-                Ok(CallToolResult::success(content))
-            }
-            Err(e) => {
-                Err(McpError::internal_error(format!("弹窗创建失败: {}", e), None))
-            }
+    if output.status.success() {
+        let response = String::from_utf8_lossy(&output.stdout);
+        let response = response.trim();
+        if response.is_empty() {
+            Ok("用户取消了操作".to_string())
+        } else {
+            Ok(response.to_string())
         }
-    }
-
-    #[tool(description = "ji 全局记忆管理工具，用于存储和管理重要的开发规范、用户偏好和最佳实践")]
-    pub async fn ji(
-        &self,
-        #[tool(aggr)] request: JiyiRequest,
-    ) -> Result<CallToolResult, McpError> {
-        // 检查项目路径是否存在
-        if !std::path::Path::new(&request.project_path).exists() {
-            return Err(McpError::invalid_params(
-                format!("项目路径不存在: {}", request.project_path),
-                None
-            ));
-        }
-
-        let manager = MemoryManager::new(&request.project_path)
-            .map_err(|e| McpError::internal_error(format!("创建记忆管理器失败: {}", e), None))?;
-
-        let result = match request.action.as_str() {
-            "记忆" => {
-                if request.content.trim().is_empty() {
-                    return Err(McpError::invalid_params("缺少记忆内容".to_string(), None));
-                }
-
-                let category = match request.category.as_str() {
-                    "rule" => MemoryCategory::Rule,
-                    "preference" => MemoryCategory::Preference,
-                    "pattern" => MemoryCategory::Pattern,
-                    "context" => MemoryCategory::Context,
-                    _ => MemoryCategory::Context,
-                };
-
-                let id = manager.add_memory(&request.content, category)
-                    .map_err(|e| McpError::internal_error(format!("添加记忆失败: {}", e), None))?;
-
-                format!("✅ 记忆已添加，ID: {}\n📝 内容: {}\n📂 分类: {:?}", id, request.content, category)
-            }
-            "回忆" => {
-                manager.get_project_info()
-                    .map_err(|e| McpError::internal_error(format!("获取项目信息失败: {}", e), None))?
-            }
-            _ => {
-                return Err(McpError::invalid_params(
-                    format!("未知的操作类型: {}", request.action),
-                    None
-                ));
-            }
-        };
-
-        Ok(CallToolResult::success(vec![Content::text(result)]))
+    } else {
+        let error = String::from_utf8_lossy(&output.stderr);
+        anyhow::bail!("UI进程失败: {}", error);
     }
 }
 
@@ -219,35 +137,5 @@ pub fn parse_mcp_response(response: &str) -> Result<Vec<Content>, McpError> {
             // 如果不是JSON格式，作为纯文本处理
             Ok(vec![Content::text(response.to_string())])
         }
-    }
-}
-
-pub fn create_tauri_popup(request: &PopupRequest) -> Result<String> {
-    // 创建临时请求文件 - 跨平台适配
-    let temp_dir = std::env::temp_dir();
-    let temp_file = temp_dir.join(format!("mcp_request_{}.json", request.id));
-    let request_json = serde_json::to_string_pretty(request)?;
-    fs::write(&temp_file, request_json)?;
-
-    // 调用全局安装的等一下命令
-    let output = Command::new("等一下")
-        .arg("--mcp-request")
-        .arg(&temp_file.to_string_lossy().to_string())
-        .output()?;
-
-    // 清理临时文件
-    let _ = fs::remove_file(&temp_file);
-
-    if output.status.success() {
-        let response = String::from_utf8_lossy(&output.stdout);
-        let response = response.trim();
-        if response.is_empty() {
-            Ok("用户取消了操作".to_string())
-        } else {
-            Ok(response.to_string())
-        }
-    } else {
-        let error = String::from_utf8_lossy(&output.stderr);
-        anyhow::bail!("UI进程失败: {}", error);
     }
 }

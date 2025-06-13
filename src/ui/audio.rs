@@ -80,14 +80,11 @@ pub async fn test_audio_sound(state: State<'_, AppState>, app: tauri::AppHandle)
         config.audio_url.clone()
     };
 
-    // 异步播放音频，避免阻塞主线程
-    tokio::spawn(async move {
-        if let Err(e) = play_audio_file(&app, &audio_url).await {
-            eprintln!("测试音频播放失败: {}", e);
-        }
-    });
-
-    Ok(())
+    // 同步测试音频播放，确保能捕获错误
+    match play_audio_file(&app, &audio_url).await {
+        Ok(_) => Ok(()),
+        Err(e) => Err(format!("音效测试失败: {}", e))
+    }
 }
 
 pub async fn play_audio_file(app: &AppHandle, audio_url: &str) -> Result<()> {
@@ -100,13 +97,11 @@ pub async fn play_audio_file(app: &AppHandle, audio_url: &str) -> Result<()> {
             // 本地文件路径
             let audio_path = std::path::PathBuf::from(audio_url);
             if audio_path.exists() {
-                let audio_path_clone = audio_path.clone();
-                std::thread::spawn(move || {
-                    if let Err(e) = play_audio_sync(&audio_path_clone) {
-                        eprintln!("音频播放失败: {}", e);
-                    }
-                });
-                return Ok(());
+                // 使用 tokio::task::spawn_blocking 来等待音频播放完成
+                return tokio::task::spawn_blocking(move || {
+                    play_audio_sync(&audio_path)
+                }).await
+                .map_err(|e| anyhow::anyhow!("音频播放任务失败: {}", e))?;
             } else {
                 return Err(anyhow::anyhow!("自定义音频文件不存在: {:?}", audio_path));
             }
@@ -120,15 +115,11 @@ pub async fn play_audio_file(app: &AppHandle, audio_url: &str) -> Result<()> {
         return Err(anyhow::anyhow!("音频文件不存在: {:?}", audio_path));
     }
 
-    // 在新线程中播放音频，避免阻塞
-    let audio_path_clone = audio_path.clone();
-    std::thread::spawn(move || {
-        if let Err(e) = play_audio_sync(&audio_path_clone) {
-            eprintln!("音频播放失败: {}", e);
-        }
-    });
-
-    Ok(())
+    // 使用 tokio::task::spawn_blocking 来等待音频播放完成
+    tokio::task::spawn_blocking(move || {
+        play_audio_sync(&audio_path)
+    }).await
+    .map_err(|e| anyhow::anyhow!("音频播放任务失败: {}", e))?
 }
 
 async fn play_audio_from_url(url: &str) -> Result<()> {
@@ -146,14 +137,11 @@ async fn play_audio_from_url(url: &str) -> Result<()> {
     // 将bytes转换为Vec<u8>以便移动到线程中
     let bytes_vec = bytes.to_vec();
 
-    // 在新线程中播放音频
-    std::thread::spawn(move || {
-        if let Err(e) = play_audio_from_bytes(bytes_vec) {
-            eprintln!("播放网络音频失败: {}", e);
-        }
-    });
-
-    Ok(())
+    // 使用 tokio::task::spawn_blocking 来等待音频播放完成
+    tokio::task::spawn_blocking(move || {
+        play_audio_from_bytes(bytes_vec)
+    }).await
+    .map_err(|e| anyhow::anyhow!("音频播放任务失败: {}", e))?
 }
 
 fn play_audio_from_bytes(bytes: Vec<u8>) -> Result<()> {

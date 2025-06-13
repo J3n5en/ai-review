@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
 import { onMounted, ref } from 'vue'
 import McpPopup from './components/McpPopup.vue'
+import ReplySettings from './components/settings/ReplySettings.vue'
 import ThemeSettings from './components/ThemeSettings.vue'
 import WindowSettings from './components/WindowSettings.vue'
 import { REFERENCE_PROMPT } from './constants/prompts'
@@ -154,11 +155,12 @@ async function updateAudioUrl(url) {
 async function testAudioSound() {
   try {
     await invoke('test_audio_sound')
-    // 显示成功提示
+    // 只有在成功时才显示成功提示
     message.success('音效测试播放成功')
   }
   catch (error) {
     // 显示错误提示给用户
+    console.error('音效测试失败:', error)
     message.error(`音效测试失败: ${error}`)
   }
 }
@@ -269,66 +271,77 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="app"
-    class="min-h-screen bg-light-primary dark:bg-dark-primary transition-colors duration-300">
+  <div
+    id="app"
+    class="min-h-screen bg-light-primary"
+  >
     <!-- MCP弹窗 -->
-    <McpPopup v-if="showMcpPopup && mcpRequest"
+    <McpPopup
+      v-if="showMcpPopup && mcpRequest"
       :request="mcpRequest"
+      :current-theme="currentTheme"
       @response="handleMcpResponse"
       @cancel="handleMcpCancel"
-      @theme-change="setTheme" />
+      @theme-change="setTheme"
+    />
 
     <!-- 主界面 -->
-    <div v-else
-      class="flex items-center justify-center min-h-screen p-6">
+    <div
+      v-else
+      class="flex items-center justify-center min-h-screen p-6"
+    >
       <div class="max-w-6xl w-full">
         <!-- 主标题 -->
         <div class="text-center mb-8">
           <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg overflow-hidden">
-            <img src="/icons/icon-128.png"
+            <img
+              src="/icons/icon-128.png"
               alt="Zhi Logo"
-              class="w-full h-full object-contain">
+              class="w-full h-full object-contain"
+            >
           </div>
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2 transition-colors duration-300">
+          <h1 class="text-3xl font-bold card-text mb-2">
             寸止
           </h1>
-          <p class="text-lg text-gray-600 dark:text-gray-400 transition-colors duration-300">
+          <p class="text-lg card-text-secondary">
             智能代码审查与交互工具
           </p>
         </div>
 
         <!-- Tab导航 -->
         <div class="flex justify-center mb-8">
-          <div
-            class="tab-container bg-gray-100 dark:bg-dark-secondary rounded-lg p-1 border border-gray-300 dark:border-gray-700 flex transition-colors duration-300">
+          <div class="tab-container">
             <button
-              class="tab-button px-6 py-2 rounded-md text-sm font-medium transition-all duration-200 relative z-10"
+              class="tab-button"
               :class="[
                 activeTab === 'intro'
                   ? 'tab-active'
                   : 'tab-inactive',
               ]"
-              @click="activeTab = 'intro'">
+              @click="activeTab = 'intro'"
+            >
               介绍
             </button>
             <button
-              class="tab-button px-6 py-2 rounded-md text-sm font-medium transition-all duration-200 relative z-10"
+              class="tab-button"
               :class="[
                 activeTab === 'settings'
                   ? 'tab-active'
                   : 'tab-inactive',
               ]"
-              @click="activeTab = 'settings'">
+              @click="activeTab = 'settings'"
+            >
               设置
             </button>
             <button
-              class="tab-button px-6 py-2 rounded-md text-sm font-medium transition-all duration-200 relative z-10"
+              class="tab-button"
               :class="[
                 activeTab === 'prompts'
                   ? 'tab-active'
                   : 'tab-inactive',
               ]"
-              @click="activeTab = 'prompts'">
+              @click="activeTab = 'prompts'"
+            >
               参考提示词
             </button>
           </div>
@@ -336,28 +349,28 @@ onMounted(async () => {
 
         <!-- Tab内容区域 -->
         <!-- 介绍Tab -->
-        <div v-if="activeTab === 'intro'"
-          class="tab-content">
+        <div
+          v-if="activeTab === 'intro'"
+          class="tab-content"
+        >
           <!-- 功能卡片 -->
           <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <!-- MCP服务器功能 -->
-            <div
-              class="bg-white dark:bg-dark-secondary rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-              <div class="flex items-center mb-4">
-                <div
-                  class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-icon bg-blue-100">
                   <span class="text-2xl">🔧</span>
                 </div>
                 <div>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                  <h3 class="card-title">
                     MCP 服务器
                   </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
+                  <p class="card-subtitle">
                     Model Context Protocol
                   </p>
                 </div>
               </div>
-              <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
+              <ul class="space-y-2 text-sm card-text-secondary">
                 <li class="flex items-center">
                   <span class="w-2 h-2 bg-green-500 rounded-full mr-2" />
                   智能代码审查交互
@@ -378,23 +391,21 @@ onMounted(async () => {
             </div>
 
             <!-- 记忆管理功能 -->
-            <div
-              class="bg-white dark:bg-dark-secondary rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-              <div class="flex items-center mb-4">
-                <div
-                  class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-icon bg-purple-100">
                   <span class="text-2xl">🧠</span>
                 </div>
                 <div>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                  <h3 class="card-title">
                     记忆管理
                   </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
+                  <p class="card-subtitle">
                     智能记忆系统
                   </p>
                 </div>
               </div>
-              <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
+              <ul class="space-y-2 text-sm card-text-secondary">
                 <li class="flex items-center">
                   <span class="w-2 h-2 bg-green-500 rounded-full mr-2" />
                   开发规范存储
@@ -413,64 +424,112 @@ onMounted(async () => {
                 </li>
               </ul>
             </div>
+
+            <!-- 主题与界面功能 -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-icon bg-green-100">
+                  <span class="text-2xl">🎨</span>
+                </div>
+                <div>
+                  <h3 class="card-title">
+                    界面设置
+                  </h3>
+                  <p class="card-subtitle">
+                    个性化配置选项
+                  </p>
+                </div>
+              </div>
+              <ul class="space-y-2 text-sm card-text-secondary">
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                  深色/浅色主题
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                  窗口置顶设置
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                  音频通知配置
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                  继续回复设置
+                </li>
+              </ul>
+            </div>
           </div>
 
           <!-- 状态指示 -->
           <div class="mt-6 text-center">
             <div
-              class="inline-flex items-center px-4 py-2 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm transition-colors duration-300">
-              <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse" />
+              class="inline-flex items-center px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm border border-primary-200 shadow-sm"
+            >
+              <div class="w-2 h-2 bg-primary-500 rounded-full mr-2 animate-pulse" />
               MCP 服务器就绪
             </div>
           </div>
         </div>
 
         <!-- 设置Tab -->
-        <div v-else-if="activeTab === 'settings'"
-          class="max-w-3xl mx-auto space-y-6 tab-content">
+        <div
+          v-else-if="activeTab === 'settings'"
+          class="max-w-3xl mx-auto space-y-6 tab-content"
+        >
           <!-- 主题设置组件 -->
-          <ThemeSettings :current-theme="currentTheme"
-            @theme-change="setTheme" />
+          <ThemeSettings
+            :current-theme="currentTheme"
+            @theme-change="setTheme"
+          />
+
+          <!-- 继续回复设置组件 -->
+          <div class="card">
+            <ReplySettings />
+          </div>
 
           <!-- 窗口设置组件 -->
-          <WindowSettings :always-on-top="alwaysOnTop"
+          <WindowSettings
+            :always-on-top="alwaysOnTop"
             :audio-notification-enabled="audioNotificationEnabled"
             :audio-url="audioUrl"
             @toggle-always-on-top="toggleAlwaysOnTop"
             @toggle-audio-notification="toggleAudioNotification"
             @update-audio-url="updateAudioUrl"
-            @test-audio="testAudioSound" />
+            @test-audio="testAudioSound"
+          />
         </div>
 
         <!-- 参考提示词Tab -->
-        <div v-else-if="activeTab === 'prompts'"
-          class="max-w-4xl mx-auto tab-content">
-          <div
-            class="bg-white dark:bg-dark-secondary rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-            <div class="flex items-center justify-between mb-6">
-              <div class="flex items-center">
-                <div
-                  class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300">
-                  <span class="text-2xl">📝</span>
-                </div>
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">
-                    参考提示词
-                  </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
-                    AI助手交互规范和智能记忆管理指南
-                  </p>
-                </div>
+        <div
+          v-else-if="activeTab === 'prompts'"
+          class="max-w-4xl mx-auto tab-content"
+        >
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon bg-orange-100">
+                <span class="text-2xl">📝</span>
               </div>
-              <button class="btn btn-primary"
-                @click="copyPromptContent">
+              <div class="flex-1">
+                <h3 class="card-title">
+                  参考提示词
+                </h3>
+                <p class="card-subtitle">
+                  AI助手交互规范和智能记忆管理指南
+                </p>
+              </div>
+              <button
+                class="btn btn-primary ml-4"
+                @click="copyPromptContent"
+              >
                 <span class="text-sm mr-2">📋</span>
                 {{ copyButtonText }}
               </button>
             </div>
 
             <div
-              class="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 text-sm text-gray-800 dark:text-gray-300 font-mono leading-relaxed max-h-96 overflow-y-auto transition-colors duration-300">
+              class="card-bg-accent rounded-lg p-4 text-sm card-text font-mono leading-relaxed max-h-96 overflow-y-auto"
+            >
               <pre class="whitespace-pre-wrap">{{ promptContent }}</pre>
             </div>
           </div>
@@ -479,29 +538,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-/* 确保平滑的主题切换动画 */
-#app {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-/* 加载动画 */
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-</style>

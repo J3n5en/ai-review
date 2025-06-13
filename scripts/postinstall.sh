@@ -9,7 +9,7 @@ echo "🚀 AI Review 安装后配置..."
 
 # 获取应用程序路径
 APP_PATH="/Applications/AI Review.app"
-MAIN_BINARY="$APP_PATH/Contents/MacOS/ai-review-ui"
+MAIN_BINARY="$APP_PATH/Contents/MacOS/等一下"
 
 # 检查应用是否存在
 if [[ ! -d "$APP_PATH" ]]; then
@@ -45,7 +45,7 @@ chmod +x "$UI_TARGET"
 echo "✓ 等一下 命令已创建 -> $MAIN_BINARY"
 
 # 检查是否有独立的MCP服务器二进制文件
-MCP_BINARY="$APP_PATH/Contents/MacOS/ai-review-mcp"
+MCP_BINARY="$APP_PATH/Contents/MacOS/寸止"
 if [[ -f "$MCP_BINARY" ]]; then
     ln -s "$MCP_BINARY" "$MCP_TARGET"
     chmod +x "$MCP_TARGET"
